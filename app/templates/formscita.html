@@ -1,0 +1,195 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Coordinar cita</h4>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Llenar los datos para coordinar cita</div>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6 col-lg-4">
+									<!---Datos personales-->
+									<label class="mb-3"><b>Datos personales</b></label>
+									<div class="form-group form-group-default">
+										<label>Nombre</label>
+										<input id="Name" type="text" class="form-control" placeholder="Primer nombre">
+									</div>
+									<div class="form-group form-group-default">
+										<input id="Name" type="text" class="form-control" placeholder="Segundo nombre">
+									</div>
+									<div class="form-group form-group-default">
+										<label>Apellidos</label>
+										<input id="Name" type="text" class="form-control" placeholder="Primer apellido">
+									</div>
+									<div class="form-group form-group-default">
+										<input id="Name" type="text" class="form-control" placeholder="Segundo apellido">
+									</div>
+									<div class="form-group form-inline">
+										<label for="inlineinput" class="col-md-3 col-form-label">DPI</label>
+										<div class="col-md-9 p-0">
+											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese DPI">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="email2">Correo electrónico</label>
+										<input type="email" class="form-control" id="email2" placeholder="Ingrese correo">
+										<small id="emailHelp2" class="form-text text-muted">Nunca compartiremos su correo electrónico ingresado.</small>
+									</div>
+									<div class="form-group form-inline">
+										<label for="inlineinput" class="col-md-3 col-form-label">Teléfono</label>
+										<div class="col-md-9 p-0">
+											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese número">
+										</div>
+									</div>
+									<!---end datos personales-->
+
+
+
+									<!---Not sure if is going to be used
+									<div class="form-group has-success">
+										<label for="successInput">Success Input</label>
+										<input type="text" id="successInput" value="Success" class="form-control">
+									</div>
+									<div class="form-group has-error has-feedback">
+										<label for="errorInput">Error Input</label>
+										<input type="text" id="errorInput" value="Error" class="form-control">
+										<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>
+									</div>
+									<div class="form-group">
+										<label for="disableinput">Disable Input</label>
+										<input type="text" class="form-control" id="disableinput" placeholder="Enter Input" disabled>
+									</div>-->
+									
+									
+								</div>
+								<div class="col-md-6 col-lg-4">		
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Calendario</label>
+										<select class="form-control" id="exampleFormControlSelect1">
+											<option>Fecha 1</option>
+											<option>Fecha 2</option>
+											<option>Fecha 3</option>
+										</select>
+									</div>	
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Horario</label>
+										<select class="form-control" id="exampleFormControlSelect1">
+											<option>Hora 1</option>
+											<option>Hora 2</option>
+											<option>Hora 3</option>
+										</select>
+									</div>	
+									
+									<div class="form-group">
+										<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" value="">
+												<span class="form-check-sign">Confirmo que agendo cita de propiedad de mi interés</span>
+											</label>
+										</div>
+									</div>
+									<!---not sure if will use it later 
+									<div class="form-group">
+										<div class="input-group">
+											<input type="text" class="form-control" aria-label="Text input with dropdown button">
+											<div class="input-group-append">
+												<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
+													<div role="separator" class="dropdown-divider"></div>
+													<a class="dropdown-item" href="#">Separated link</a>
+												</div>
+											</div>
+										</div>
+									</div> 
+									<div class="form-group">
+										<div class="input-icon">
+											<span class="input-icon-addon">
+												<i class="fa fa-user"></i>
+											</span>
+											<input type="text" class="form-control" placeholder="Username">
+										</div>
+									</div> -->
+									</div>
+								</div>
+								<div class="col-md-6 col-lg-4">
+									<!---Leaving in case of editing form or types of spaces to fill
+									<div class="form-group">
+										<label for="largeInput">Large Input</label>
+										<input type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
+									</div>
+									<div class="form-group">
+										<label for="largeInput">Default Input</label>
+										<input type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input">
+									</div>
+									<div class="form-group">
+										<label for="smallInput">Small Input</label>
+										<input type="text" class="form-control form-control-sm" id="smallInput" placeholder="Small Input">
+									</div>
+									<div class="form-group">
+										<label for="largeSelect">Large Select</label>
+										<select class="form-control form-control-lg" id="largeSelect">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="defaultSelect">Default Select</label>
+										<select class="form-control form-control" id="defaultSelect">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="smallSelect">Small Select</label>
+										<select class="form-control form-control-sm" id="smallSelect">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</div>-->
+								</div>
+							</div>
+						</div>
+						<div class="card-action">
+							<button class="btn btn-success">Enviar</button>
+							<button class="btn btn-danger">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo2.js"></script>
+
+{% endblock javascripts %}	

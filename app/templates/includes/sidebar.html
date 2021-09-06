@@ -1,0 +1,354 @@
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2" data-background-color="dark2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+
+				{% if session.get('logged_in') %}
+					<div class="user">
+						<div class="avatar-sm float-left mr-2">
+							<img src="/static/assets/img/profile1.jpg" alt="..." class="avatar-img rounded-circle">
+						</div>
+						<div class="info">
+							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									{{ session.get('username') }}
+									<span class="user-level">
+										{{ session.get('email') }}
+									</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">Mi perfil</span>
+										</a>
+									</li>
+									<li>
+										<a href="/logout">
+											<span class="link-collapse">Cerrar sesión</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav nav-primary">
+						<li class="nav-item {% if 'index' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+								<i class="fas flaticon-user"></i>
+								<p>Mi cuenta</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="dashboard">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="#">
+										<!---<a href="/index.html">--->
+											<span class="sub-item">Mis movimientos</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Components</h4>
+						</li>
+
+						<!--- Compra -->
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas flaticon-shopping-bag"></i>
+								<p>Compra</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="base">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="#">
+											<span class="sub">   Zona </span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>9</option>
+										<option>10</option>
+										<option>14</option>
+										<option>15</option>
+										<option>16</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Tipo de vivienda</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>Casa</option>
+										<option>Apartamento</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Número de habitaciones</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Número de baños</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>No tengo preferencia</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Área de residencia</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>Colonia</option>
+										<option>Condominio</option>
+										<option>Sobre calle pública</option>
+										<option>No tengo preferencia</option>
+									  </select>
+										</a>
+									</li>
+									<li class="mx-4 mt-2">
+										<a target="_blank"
+										   href="/ui-avatars.html"
+										   class="btn btn-primary">
+											<span class="btn-primary"> <i class="fa flaticon-search-2"></i> </span>Buscar</a>
+									</li>
+									<li>
+								</ul>
+							</div>
+						</li>
+						<!--- end compra-->
+
+
+						<!--renta -->
+						<li class="nav-item {% if 'layout' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#sidebarLayouts">
+								<i class="fas flaticon-suitcase"></i>
+								<p>Renta</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="sidebarLayouts">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="#">
+											<span class="sub">   Zona </span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>9</option>
+										<option>10</option>
+										<option>14</option>
+										<option>15</option>
+										<option>16</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Tipo de vivienda</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>Casa</option>
+										<option>Apartamento</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Número de habitaciones</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Número de baños</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>No tengo preferencia</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub">Área de residencia</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>Colonia</option>
+										<option>Condominio</option>
+										<option>Sobre calle pública</option>
+										<option>No tengo preferencia</option>
+									  </select>
+										</a>
+									</li>
+									<li class="mx-4 mt-2">
+										<a target="_blank"
+										   href="/ui-avatars.html"
+										   class="btn btn-primary">
+											<span class="btn-primary"> <i class="fa flaticon-search-2"></i> </span>Buscar</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<!---end renta-->
+
+
+						<!---venta -->
+						<li class="nav-item {% if 'form' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#forms">
+								<i class="fas flaticon-file-1"></i>
+								<p>Venta</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="forms">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="/forms.html">
+											<span class="sub-item">Formulario</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<!---end venta-->
+
+						<li class="nav-item {% if 'tables' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#tables">
+								<i class="fas flaticon-idea"></i>
+								<p>Promocionar</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="tables">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="/ui-avatars.html">
+											<span class="sub-item">Zona </span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>9</option>
+										<option>10</option>
+										<option>14</option>
+										<option>15</option>
+										<option>16</option>
+									  </select>
+										</a>
+									</li>
+									<li>
+										<a href="/ui-buttons.html">
+											<span class="sub-item">Tipo de vivienda</span>
+										</a>
+									</li>
+									<li>
+										<a>
+										<span class="sub-item"></span>
+									<select class="selectpicker">
+										<option>Casa</option>
+										<option>Apartamento</option>
+									  </select>
+										</a>
+									</li>
+									<li class="mx-4 mt-2">
+										<a target="_blank"
+										   href="/ui-avatars.html"
+										   class="btn btn-primary">
+											<span class="btn-primary"> <i class="fa flaticon-search-2"></i> </span>Buscar</a>
+									</li>
+									<li class="mx-4 mt-2">
+										<a target="_blank"
+										   href="/layout-sidebar-style-1.html"
+										   class="btn btn-secondary">
+											Mis promociones</a>
+									</li>
+									<li>
+							</div>
+						</li>
+
+					</ul>
+				{% else %}
+					<ul class="nav nav-primary">
+						<li class="mx-4 mt-2">
+						</li>
+					</ul>
+				{% endif %}	
+				</div>
+			</div>
+		</div>
+        <!-- End Sidebar -->
+        
