@@ -58,7 +58,7 @@
 											<div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
 												<!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
 												<a target="_blank"
-												   href="/forms/cita"
+												   href="/form-cita"
 												   class="btn btn-secondary">
 													Hacer Cita</a>
 											</div>
@@ -122,7 +122,7 @@
 											<div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
 												<!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
 												<a target="_blank"
-												   href="/forms/cita"
+												   href="/form-cita"
 												   class="btn btn-secondary">
 													Hacer Cita</a>
 											</div>
@@ -168,6 +168,43 @@
 			</div>
 		</div>
 	</div>
+<div class="pagination">
+        {% set pagination_prev_num = pagination_page - 1 %}
+        {% set pagination_next_num = pagination_page + 1 %}
+    <div class="text-right">
+        <a href="{{ url_for('home', page=pagination_prev_num) }}"
+           class="btn btn-outline-light {% if pagination_page == 1 %}disabled{% endif %}">
+            &laquo;
+        </a>
+{#    <!-- Loop through the number of pages to display a link for each-->#}
+        {% for page_num in [pagination_prev_num,pagination_page,pagination_next_num] %}
+            {% if page_num <= 0 %}
+{#            <!-- Check for the active page and set the link to  a "Active"-->#}
+                        {% if pagination_page == page_num %}
+                        <a href="{{ url_for('home', page=page_num) }}"
+                           class="btn btn--outline-light">
+                            {{ page_num }}
+                        </a>
+                        {% else %}
+                            <a href="{{ url_for('home', page=page_num) }}"
+                           class="btn btn-outline-dark">
+                            {{ page_num }}
+                        </a>
+                        {% endif %}
+                    {% else %}
+                        ...
+                    {% endif %}
+        {% endfor %}
+        <a href="{{ url_for('home', page=pagination_next_num) }}"
+           class="btn btn-outline-light">
+            &raquo;
+        </a>
+    </div>
+    <p class="text-right mt-3">
+       Showing page {{ pagination_page }}
+    </p>
+</div>
+
 </div>
 {% endblock content %}
 

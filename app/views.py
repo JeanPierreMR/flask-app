@@ -1,7 +1,9 @@
 from flask import Flask, render_template, url_for, request, session, redirect
 from app import db_manager
 from app import app
-from app.forms import LoginForm, CreateAccountForm
+from app.db_manager import insert_house
+from app.forms import LoginForm, CreateAccountForm, VentaForm
+
 # -- calling the create function each time
 db_manager.create()
 
@@ -13,21 +15,55 @@ db_manager.create()
 @app.route("/home")
 @app.route("/forms")
 def home():
-    #Session control
+    # Session control
     if not session.get('logged_in'):
         return redirect("/login")
     else:
-        return render_template("ui-avatars.html")
+        page = request.args.get('page', 1, type=int)
+        return render_template("ui-avatars.html", pagination_page=page)
 
-@app.route("/forms/ventas")
-def form_ventas():
-    return render_template("form_venta.html")
-@app.route("/forms/cita")
+
+# -- Form ventas page
+@app.route("/form-venta", methods=["POST", "GET"])
+def form_venta1():
+    venta_form = VentaForm(request.form)
+    if request.method == 'POST':
+        print(dict(request.form))
+        name1 = request.form['name1']
+        # name2 = request.form['name2']
+        # lastname1 = request.form['lastname1']
+        # lastname2 = request.form['lastname2']
+        # dpi = request.form['dpi']
+        # email1 = request.form['email1']
+        # phone = request.form['phone']
+        # address = request.form['address']
+        # typehome = request.form['typehome']
+        # zone = request.form['zone']
+        # roomsnumber = request.form['roomsnumber']
+        # roomsbath = request.form['roomsbath']
+        # pricedol = request.form['pricedol']
+        # pricequet = request.form['pricequet']
+        # meters = request.form['meters']
+        # comments = request.form['comments']
+        # photos = request.form['photos']
+        # user_id = 1
+        # insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos)
+        return render_template('form_venta.html',
+                               msg='Su formulario fue enviado',
+                               success=True,
+                               form=venta_form)
+    elif not session.get('logged_in'):
+        return redirect('/register')
+    else:
+        return render_template("form_venta.html", form=venta_form)
+
+
+@app.route("/form-cita")
 def form_cita():
     return render_template("form_cita.html")
 
 
-#-------- User control -------#
+# -------- User control -------#
 
 @app.route("/logout")
 def logout():
@@ -89,8 +125,6 @@ def login_fun():
                                form=login_form)
     else:
         return render_template("ui-avatars.html")
-
-
 
 
 if __name__ == "__main__":

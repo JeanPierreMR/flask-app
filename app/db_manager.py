@@ -53,7 +53,6 @@ def create():
     db.commit()
 
 
-
 # Insert user to db
 def insert_user(username, email, password):
     db = sq.connect("site_db")
@@ -101,3 +100,22 @@ def check_login_data(username, password):
         print(data)
         if len(data) > 0:
             return True
+
+
+
+
+# insert house
+def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos):
+    # name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos
+
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""INSERT INTO houses (
+        primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, 
+        DPI, correo_electronico, telefono, direccion, tipo, zona, n_habitaciones, 
+        precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, photos, user_id
+    ) VALUES(?, ?, ?, ?, 
+        ?, ?, ?, ?, ?, ?, ?, 
+        ?, ?, ?, ?, ?, ?)""", (name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos, user_id))
+    db.commit()
+    db.close()
