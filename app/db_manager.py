@@ -7,6 +7,7 @@ def create():
     cursor = db.cursor()
     print("creating database connection file!")
     time.sleep(1)
+    #creating users table
     cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS 
         users(
@@ -15,7 +16,7 @@ def create():
             email TEXT,
             password BLOB) 
         """)
-    #not null varchar(2000)
+    #creating houses table
     cursor.execute("""
             CREATE TABLE IF NOT EXISTS
             houses(
@@ -39,10 +40,11 @@ def create():
                 user_id INTEGER,
                 FOREIGN KEY (user_id) REFERENCES user (user_id))
             """)
+    #create photos table
     cursor.execute("""
                 CREATE TABLE IF NOT EXISTS
-                photo(
-                    photo_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                photos(
+                    photos_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     photos BLOB NOT NULL,
                     house_id INTEGER,
                     FOREIGN KEY (house_id) REFERENCES houses (house_id))
@@ -53,7 +55,7 @@ def create():
 
 
 # Insert user to db
-def insert(username, email, password):
+def insert_user(username, email, password):
     db = sq.connect("site_db")
     cursor = db.cursor()
     cursor.execute("""INSERT INTO users (username, email, password) VALUES(?,?,?)""", (username, email, password))
@@ -86,7 +88,7 @@ def get_email(username):
     data = cursor.fetchall()
     return data[0]
 
-# -- Basic data check, using email and password to check if user entered correct login info
+# Basic data check, using email and password to check if user entered correct login info
 def check_login_data(username, password):
     db = sq.connect("site_db")
     cursor = db.cursor()

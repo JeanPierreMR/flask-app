@@ -23,7 +23,7 @@ def home():
 def form_ventas():
     return render_template("form_venta.html")
 @app.route("/forms/cita")
-def form_ventas():
+def form_cita():
     return render_template("form_cita.html")
 
 
@@ -47,7 +47,7 @@ def register():
         email = request.form['email']
         if db_manager.check_data(email):
             if db_manager.check_username(username):
-                db_manager.insert(username, email, password)
+                db_manager.insert_user(username, email, password)
                 return render_template('accounts/register.html',
                                        msg='User created please <a href="/login">login</a>',
                                        success=True,
