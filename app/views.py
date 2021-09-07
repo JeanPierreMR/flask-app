@@ -14,7 +14,7 @@ db_manager.create()
 def home():
     #Session control
     if not session.get('logged_in'):
-        return render_template('login.html')
+        return redirect("/login")
     else:
         return render_template("ui-avatars.html")
 

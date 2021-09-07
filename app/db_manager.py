@@ -10,12 +10,42 @@ def create():
     cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS 
         users(
-            user_id INTEGER PRIMARY KEY AUTOINCREMENT not null,
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             username TEXT, 
             email TEXT,
             password BLOB) 
         """)
-    #not null varchar(2000)
+    # #not null varchar(2000)
+    # cursor.execute("""
+    #         CREATE TABLE IF NOT EXISTS
+    #         houses(
+    #             house_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    #             primer_nombre TEXT,
+    #             segundo_nombre TEXT,
+    #             primer_apellido TEXT,
+    #             segundo_apellido TEXT,
+    #             DPI INTEGER,
+    #             correo_electronico TEXT,
+    #             telefono NUMERIC,
+    #             direccion TEXT,
+    #             tipo TEXT,
+    #             zona NUMERIC,
+    #             n_habitaciones NUMERIC,
+    #             precio_dolares FLOAT,
+    #             precio_quetzales FLOAT,
+    #             metros_cuadrados FLOAT,
+    #             comentarios_adicionales TEXT,
+    #             photos BLOB NOT NULL,
+    #             FOREIGN KEY (user_id) REFERENCES user (user_id))
+    #         """)
+    # cursor.execute("""
+    #             CREATE TABLE IF NOT EXISTS
+    #             photo(
+    #                 photo_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    #                 photos BLOB NOT NULL,
+    #                 house_id INTEGER,
+    #                 FOREIGN KEY (house_id) REFERENCES houses (house_id))
+    #             """)
 
     db.commit()
 
