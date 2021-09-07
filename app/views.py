@@ -11,6 +11,7 @@ db_manager.create()
 @app.route("/")
 @app.route("/index.html")
 @app.route("/home")
+@app.route("/forms")
 def home():
     #Session control
     if not session.get('logged_in'):
@@ -18,8 +19,12 @@ def home():
     else:
         return render_template("ui-avatars.html")
 
-
-
+@app.route("/forms/ventas")
+def form_ventas():
+    return render_template("form_venta.html")
+@app.route("/forms/cita")
+def form_ventas():
+    return render_template("form_cita.html")
 
 
 #-------- User control -------#
