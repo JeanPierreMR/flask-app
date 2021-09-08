@@ -1,6 +1,5 @@
 import sqlite3 as sq
-import time, os
-
+import time
 
 def create():
     db = sq.connect("site_db")
@@ -109,14 +108,6 @@ def check_login_data(username, password):
             return True
 
 
-def test_draft():
-    db = sq.connect("site_db")
-    cursor = db.cursor()
-    cursor.execute("""SELECT * FROM users)""")
-    data = cursor.fetchall()
-    print(type(data))
-    return data
-
 # insert house
 def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images):
     # name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos
@@ -133,13 +124,12 @@ def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone
                    (str(name1), str(name2), str(lastname1), str(lastname2), int(dpi), str(email1), int(phone), str(address), str(typehome), int(zone),
                     int(roomsnumber), int(roomsbath), float(pricedol), float(pricequet), int(meters), str(comments), int(user_id[0]),))
     house_id = cursor.lastrowid
-    print(house_id)
     for image in images:
         cursor.execute("""INSERT INTO photos (
                 photos,
-                house_id,
+                house_id
             ) VALUES(?, ?)""",
-                       (image, house_id,))
+                       (image.read(), house_id,))
     print(house_id)
     db.commit()
     db.close()
@@ -162,12 +152,14 @@ def get_house_images(house_id, num_image):
     db = sq.connect("site_db")
     cursor = db.cursor()
     cursor.execute("""SELECT photos
-    FROM houses 
+    FROM photos 
     WHERE house_id=(?)
     LIMIT 1 OFFSET (?)""",
-                   (house_id, num_image,))
+                   (int(house_id), int(num_image)-1,))
     data = cursor.fetchall()
+    print(f'data {data}\nhouse_id {int(house_id)}\nnum_image {int(num_image)-1}\n')
     return data[0]
+
 # create()
 # db = sq.connect("site_db")
 # cursor = db.cursor()

@@ -86,7 +86,7 @@ class VentaForm(FlaskForm):
     meters = FloatField('metros_cuadrados', id='metros_cuadrados_create', validators=[DataRequired()])
     comments = TextField('comentarios_adicionales', id='comentarios_adicionales_create', validators=[DataRequired()])
     images = MultipleFileField(
-        'Upload Images',
+        'file',
         validators=[
             InputRequired(),
             MultiFileAllowed(['jpg', 'png', 'jpeg', 'tif'])

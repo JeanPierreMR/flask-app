@@ -6,7 +6,7 @@ from app import app
 from app.db_manager import insert_house
 from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm
 from PIL import Image
-from io import StringIO
+from io import BytesIO
 # -- calling the create function each time
 db_manager.create()
 
@@ -66,8 +66,7 @@ def form_venta1():
         meters = request.form['meters']
         comments = request.form['comments']
         user_id = session['user_id']
-
-        images = request.files.getlist('file')
+        images = request.files.getlist('images')
         insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
         return render_template('form_venta.html',
                                msg='Su formulario fue enviado',
@@ -86,33 +85,23 @@ def form_venta1():
 #     print(dict(request.files))
 #     print('afdg: {}'.format(request.files.getlist('file')))
 #     for uploaded_file in request.files.getlist('file'):
-#         # print(uploaded_file)
+#         print(uploaded_file)
 #         # print(uploaded_file.read())
-#         img = Image.open(uploaded_file)
-#         data = base64.b64encode(npimg)
-#         print(data)
-#         return render_template_string('<img src="data:image/png;base64,{}">'.format(base64.b64encode(data)))
-#     file_obj = request.files
-#     for f in file_obj:
-#         file = request.files.get(f)
-#         print(file)
-#         print(f)
-#     files = request.files.getlist('files[]')
-#     files2 = request.files.getlist('charts')
-#     print(files)
-#     print(files2)
 #     return ("rand.html")
 
 @app.route('/imgs')
 def img_house():
     num_image = request.args.get('num_image', 0, type=int)
     house_id = request.args.get('house_id', 0, type=int)
-    img_io = StringIO()
-    file = db_manager.get_house_images(house_id, num_image)
-    img = Image.open(file)
-    img.save(img_io, 'JPEG', quality=70)
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/jpeg')
+    print(house_id)
+
+    try:
+        file = db_manager.get_house_images(house_id, num_image)
+        return send_file(BytesIO(file[0]), mimetype='image/jpeg')
+    except Exception as e:
+        print(e)
+        print('tuku')
+        return 'https://pngimage.net/wp-content/uploads/2018/06/nothing-png-7.png'
 
 @app.route("/form-cita")
 def form_cita():
