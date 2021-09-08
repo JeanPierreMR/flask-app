@@ -1,0 +1,125 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Avatars {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Opciones</h4>
+			</div>
+			<div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Tus opciones</h4>
+
+                            </div>
+                            {% for house_info in houses_info %}
+                                <div class="card-body">
+                                    <p class="demo">
+                                        {% for n_image in range(1,6) %}
+                                            <div class="avatar avatar-xxl">
+{#                                                {% houseid = str(house_info[17]) %}#}
+                                                <img src={{ url_for('img_house', num_image=n_image, house_id=house_info[17] ) }} alt="..." class="avatar-img rounded">
+                                            </div>
+                                        {% endfor %}
+
+                                    </p>
+                                </div>
+                                <!---Trying something new-->
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Información</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-5 col-md-4">
+                                                    <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
+                                                        <!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
+                                                        <a target="_blank"
+                                                           href="/form-cita"
+                                                           class="btn btn-secondary">
+                                                            Hacer Cita</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-md-8">
+                                                    <div class="tab-content" id="v-pills-without-border-tabContent">
+                                                        <div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
+                                                            <p>Tipo: {{ house_info[8] }}</p>
+                                                            <p>Zona: {{ house_info[9] }}</p>
+                                                            <p>Habitaciones: {{ house_info[10] }}</p>
+                                                            <p>Direccion: {{ house_info[7] }}</p>
+                                                            <p>Baños:   {{ house_info[11] }}</p>
+                                                            <p>Precio Q.{{ house_info[12] }}</p>
+                                                            <p>Precio Dolares: {{ house_info[13] }}</p>
+                                                            <p>Metros cuadrados Q.{{ house_info[14] }}</p>
+                                                            <p>Comentarios: {{ house_info[15] }}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!---end something new-->
+                            {% endfor %}
+                        </div>
+                    </div>
+
+		</div>
+	</div>
+<div class="pagination">
+        {% set pagination_prev_num = pagination_page - 1 %}
+        {% set pagination_next_num = pagination_page + 1 %}
+    <div class="text-right">
+        <a href="{{ url_for('full_output', page=pagination_prev_num) }}"
+           class="btn btn-outline-light {% if pagination_page == 1 %}disabled{% endif %}">
+            &laquo;
+        </a>
+{#    <!-- Loop through the number of pages to display a link for each-->#}
+        {% for page_num in [pagination_prev_num,pagination_page,pagination_next_num] %}
+            {% if page_num > 0 %}
+{#            <!-- Check for the active page and set the link to  a "Active"-->#}
+                        {% if pagination_page == page_num %}
+                            <a href="{{ url_for('full_output', page=page_num) }}"
+                               class="btn btn--outline-light">
+                                {{ page_num }}
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('full_output', page=page_num) }}"
+                           class="btn btn-outline-dark">
+                            {{ page_num }}
+                            </a>
+                        {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        <a href="{{ url_for('full_output', page=pagination_next_num) }}"
+           class="btn btn-outline-light">
+            &raquo;
+        </a>
+    </div>
+    <p class="text-right mt-3">
+       Showing page {{ pagination_page }}
+    </p>
+</div>
+
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo2.js"></script>
+
+{% endblock javascripts %}

@@ -5,6 +5,7 @@ from app import app
 from app.db_manager import insert_house
 from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm
 from io import BytesIO
+
 # -- calling the create function each time
 db_manager.create()
 
@@ -21,7 +22,7 @@ def home():
     if not session.get('logged_in'):
         return redirect("/login")
     elif request.method == 'POST':
-        #select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
+        # select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
         page = request.args.get('page', 1, type=int)
         zone = request.form['zone']
         typehome = request.form['typehome']
@@ -37,7 +38,7 @@ def home():
         resp.set_cookie('roomsbath', roomsbath)
         return resp
     else:
-        #page = request.args.get('page', 1, type=int)
+        # page = request.args.get('page', 1, type=int)
         page = request.args.get('page', 1, type=int)
         zone = request.cookies.get('zone', default=9)
         typehome = request.cookies.get('typehome', default='Casa')
@@ -52,6 +53,7 @@ def home():
         resp.set_cookie('roomsnumber', str(roomsnumber))
         resp.set_cookie('roomsbath', str(roomsbath))
         return resp
+
 
 # -- Form ventas page
 @app.route("/form-venta", methods=["POST", "GET"])
@@ -81,7 +83,8 @@ def form_venta1():
         comments = request.form['comments']
         user_id = session['user_id']
         images = request.files.getlist('images')
-        insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
+        insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone,
+                     roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
         return render_template('form_venta.html',
                                msg='Su formulario fue enviado',
                                success=True,
@@ -91,16 +94,19 @@ def form_venta1():
     else:
         return render_template("form_venta.html", form=venta_form, compra_form=compra_form)
 
+
 @app.route('/imgs')
 def img_house():
     num_image = request.args.get('num_image', -1, type=int)
     house_id = request.args.get('house_id', 0, type=int)
+    print(f'{num_image}, {house_id}')
     try:
         file = db_manager.get_house_images(house_id, num_image)
         return send_file(BytesIO(file[0]), mimetype='image/jpeg')
     except Exception as e:
-        #print('sending blank')
-        return send_from_directory(directory='static/img',filename='img.png', as_attachment=True)
+        # print('sending blank')
+        return send_from_directory(directory='static/img', filename='img.png', as_attachment=True)
+
 
 @app.route("/form-cita")
 def form_cita():
@@ -170,6 +176,30 @@ def login_fun():
                                form=login_form)
     else:
         return redirect('/')
+
+
+@app.route("/full", methods=["POST", "GET"])
+def full_output():
+    compra_form = CompraForm(request.form)
+    # Session control
+    if not session.get('logged_in'):
+        return redirect("/login")
+    elif request.method == 'POST':
+        page = request.args.get('page', 1, type=int)
+        houses_info = db_manager.get_all_houses(page)
+        resp = make_response(
+            render_template("ui-avatars-full.html", pagination_page=page,
+                            houses_info=houses_info, compra_form=compra_form)
+        )
+        return resp
+    else:
+
+        page = request.args.get('page', 1, type=int)
+        houses_info = db_manager.get_all_houses(page)
+        resp = make_response(
+            render_template("ui-avatars-full.html", pagination_page=page,
+                            houses_info=houses_info, compra_form=compra_form))
+        return resp
 
 
 if __name__ == "__main__":

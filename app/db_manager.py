@@ -162,13 +162,14 @@ def get_all_houses(page_number):
     return data
 
 def get_house_images(house_id, num_image):
+    print(num_image, house_id)
     db = sq.connect("site_db")
     cursor = db.cursor()
     cursor.execute("""SELECT photos
     FROM photos 
     WHERE house_id=(?)
     LIMIT 1 OFFSET (?)""",
-                   (int(house_id), int(num_image),))
+                   (int(house_id), int(num_image)-1,))
     data = cursor.fetchall()
     return data[0]
 
