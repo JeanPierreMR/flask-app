@@ -5,7 +5,6 @@ from app import db_manager
 from app import app
 from app.db_manager import insert_house
 from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm
-from PIL import Image
 from io import BytesIO
 # -- calling the create function each time
 db_manager.create()
@@ -76,18 +75,6 @@ def form_venta1():
         return redirect('/register')
     else:
         return render_template("form_venta.html", form=venta_form, compra_form=compra_form)
-
-# @app.route("/multiupload", methods=["POST", "GET"])
-# def multiupload():
-#     if request.method == 'GET':
-#         return render_template("rand.html")
-#     print(dict(request.form))
-#     print(dict(request.files))
-#     print('afdg: {}'.format(request.files.getlist('file')))
-#     for uploaded_file in request.files.getlist('file'):
-#         print(uploaded_file)
-#         # print(uploaded_file.read())
-#     return ("rand.html")
 
 @app.route('/imgs')
 def img_house():

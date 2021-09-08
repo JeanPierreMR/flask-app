@@ -160,17 +160,3 @@ def get_house_images(house_id, num_image):
     print(f'data {data}\nhouse_id {int(house_id)}\nnum_image {int(num_image)-1}\n')
     return data[0]
 
-# create()
-# db = sq.connect("site_db")
-# cursor = db.cursor()
-# cursor.execute("""INSERT INTO houses (
-#     primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
-#     DPI, correo_electronico, telefono, direccion, tipo, zona, n_habitaciones, n_lavados,
-#     precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, user_id
-# ) VALUES(?, ?, ?, ?,
-#     ?, ?, ?, ?, ?, ?, ?,
-#     ?, ?, ?, ?, ?, ?)""",
-#                ("name1", "name2", "lastname1", "lastname2", 123, "email1", 123, "address", "typehome", 123,
-#                 123, 123, 123.0, 123.0, 123, "str(comments)", 1,))
-# db.commit()
-# db.close()
