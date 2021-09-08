@@ -87,13 +87,20 @@ def get_email(username):
     data = cursor.fetchall()
     return data[0]
 
+def get_userid(username):
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""SELECT user_id FROM users WHERE username=(?)""", (username,))
+    data = cursor.fetchall()
+    return data[0]
+
 # Basic data check, using email and password to check if user entered correct login info
 def check_login_data(username, password):
     db = sq.connect("site_db")
     cursor = db.cursor()
     cursor.execute("""SELECT username FROM users WHERE username=(?)""", (username,))
     data = cursor.fetchall()
-    print(data)
+    print(type(data))
     if len(data) > 0:
         cursor.execute("""SELECT password FROM users WHERE password=(?)""", (password,))
         data = cursor.fetchall()
@@ -102,7 +109,13 @@ def check_login_data(username, password):
             return True
 
 
-
+def test_draft():
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""SELECT * FROM users)""")
+    data = cursor.fetchall()
+    print(type(data))
+    return data
 
 # insert house
 def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos):

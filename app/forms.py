@@ -1,9 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField, IntegerField, RadioField, TextAreaField, SubmitField, FloatField, FileField
-from wtforms.validators import Required
+from wtforms import TextField, PasswordField, IntegerField, RadioField, TextAreaField, SubmitField, FloatField, \
+    FileField, SelectField, MultipleFileField
+from wtforms.validators import Required, StopValidation
 from flask_wtf import Form
 from wtforms.validators import InputRequired, Email, DataRequired
 from flask_wtf.file import FileAllowed, FileRequired
+from collections import Iterable
+from werkzeug.datastructures import FileStorage
 
 class LoginForma(FlaskForm):
     user = TextField(u'Usuario', validators=[Required()])
@@ -31,6 +34,40 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField('Password', id='pwd_create', validators=[DataRequired()])
 
 
+
+
+class MultiFileAllowed(object):
+
+    def __init__(self, upload_set, message=None):
+        self.upload_set = upload_set
+        self.message = message
+
+    def __call__(self, form, field):
+
+        # FileAllowed only expects a single instance of FileStorage
+        # if not (isinstance(field.data, FileStorage) and field.data):
+        #     return
+
+        # Check that all the items in field.data are FileStorage items
+        if not (all(isinstance(item, FileStorage) for item in field.data) and field.data):
+            return
+
+        for data in field.data:
+            filename = data.filename.lower()
+
+            if isinstance(self.upload_set, Iterable):
+                if any(filename.endswith('.' + x) for x in self.upload_set):
+                    return
+
+                raise StopValidation(self.message or field.gettext(
+                    'File does not have an approved extension: {extensions}'
+                ).format(extensions=', '.join(self.upload_set)))
+
+            if not self.upload_set.file_allowed(field.data, filename):
+                raise StopValidation(self.message or field.gettext(
+                    'File does not have an approved extension.'
+                ))
+
 class VentaForm(FlaskForm):
     name1 = TextField('primer_nombre', id='primer_nombre_create', validators=[DataRequired()])
     name2 = TextField('segundo_nombre', id='segundo_nombre_create', validators=[DataRequired()])
@@ -40,17 +77,21 @@ class VentaForm(FlaskForm):
     email1 = TextField('correo_electronico', id='correo_electronico_create', validators=[DataRequired()])
     phone = IntegerField('telefono', id='telefono_create', validators=[DataRequired()])
     address = TextField('direccion', id='direccion_create', validators=[DataRequired()])
-    typehome = TextField('tipo', id='tipo_create', validators=[DataRequired()])
-    zone = IntegerField('zona', id='zona_create', validators=[DataRequired()])
-    roomsnumber = IntegerField('n_habitaciones', id='n_habitaciones_create', validators=[DataRequired()])
-    roomsbath = IntegerField('n_banos', id='n_banos_create', validators=[DataRequired()])
+    typehome = SelectField('Tipo', choices = [('Apartamento', 'Apartamento'), ('Casa', 'Casa')])
+    zone = SelectField('Zona', choices = [('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')] )
+    roomsnumber = SelectField('Habitaciones', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]   )
+    roomsbath = SelectField('Baños', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]   )
     pricedol = FloatField('precio_dolares', id='precio_dolares_create', validators=[DataRequired()])
     pricequet = FloatField('precio_quetzales', id='precio_quetzales_create', validators=[DataRequired()])
     meters = FloatField('metros_cuadrados', id='metros_cuadrados_create', validators=[DataRequired()])
     comments = TextField('comentarios_adicionales', id='comentarios_adicionales_create', validators=[DataRequired()])
-    photos = FileField(u'photos', id='photos_create', validators=[
-        FileRequired(),
-        FileAllowed(['png', 'jpg'], "wrong format!")
-    ])
+    images = MultipleFileField(
+        'Upload Images',
+        validators=[
+            InputRequired(),
+            MultiFileAllowed(['jpg', 'png', 'jpeg', 'tif'])
+        ]
+    )
+
     # photos = FileField(u'photos', id='photos_create', validators=[regexp('^[^/\\]\.jpg$')])
     submit = SubmitField("Send")

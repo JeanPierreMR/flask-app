@@ -84,7 +84,7 @@
                                                 <option>Apartamento</option>
                                                 <option>Casa</option>
                                             </select>
-                                            {{ form.typehome = SelectField('Tipo', choices = [('Apartamento', 'Apartamento'), ('Casa', 'Casa')]  class="form-control" )}}
+                                            {{ form.typehome(class="form-control" ) }}
                                             <label for="selectFloatingLabel2" class="placeholder">Tipo</label>
                                         </div>
 
@@ -119,7 +119,7 @@
                                                 <option>15</option>
                                                 <option>16</option>
                                             </select>
-                                            {{ form.zone = SelectField('Zona', choices = [('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')]  class="form-control" )}}
+                                            {{ form.zone(class="form-control") }}
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Cantidad de habitaciones</label>
@@ -130,7 +130,7 @@
                                                 <option>4</option>
                                                 <option>5</option>
                                             </select>
-                                            {{ form.roomsnumber = SelectField('Habitaciones', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]  class="form-control" )}}
+                                            {{ form.roomsnumber(class="form-control") }}
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Cantidad de baños</label>
@@ -141,7 +141,7 @@
                                                 <option>4</option>
                                                 <option>5</option>
                                             </select>
-                                            {{ form.roomsbath = SelectField('Banios', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]  class="form-control" )}}
+                                            {{ form.roomsbath(class="form-control") }}
                                         </div>
                                         <div class="form-group">
                                             <label for="comment">Precio en dólares</label>
@@ -180,7 +180,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlFile1">Subir imagenes de vivienda</label>
                                                 <input type="file" class="form-control-file" id="exampleFormControlFile1" multiple>
-                                                {{form.photos = secure_filename(form.fileName(), class="form-control") }}
+                                                {{form.images(class="form-control-file") }}
                                             </div>
                                             <div class="form-group">
                                                 <label for="comment">Comentarios adicionales</label>

@@ -45,9 +45,10 @@ def form_venta1():
         pricequet = request.form['pricequet']
         meters = request.form['meters']
         comments = request.form['comments']
-        photos = request.form['photos']
-        # user_id = 1
-        # insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos)
+        images = request.form['images']
+        user_id = session['user_id']
+        print(f"type: {type(images)} ")
+        # insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
         return render_template('form_venta.html',
                                msg='Su formulario fue enviado',
                                success=True,
@@ -101,7 +102,7 @@ def register():
     elif not session.get('logged_in'):
         return render_template('accounts/register.html', form=create_account_form)
     else:
-        return render_template("ui-avatars.html")
+        return redirect('/')
 
 
 # -- Login page
@@ -116,7 +117,8 @@ def login_fun():
             session['logged_in'] = True
             session['username'] = username
             session['email'] = db_manager.get_email(username)
-            return render_template("ui-avatars.html")
+            session['user_id'] = db_manager.get_userid(username)
+            return redirect('/')
         # Something (user or pass) is not ok
         return render_template('accounts/login.html', msg='Wrong email or password', form=login_form)
 
@@ -124,7 +126,7 @@ def login_fun():
         return render_template('accounts/login.html',
                                form=login_form)
     else:
-        return render_template("ui-avatars.html")
+        return redirect('/')
 
 
 if __name__ == "__main__":
