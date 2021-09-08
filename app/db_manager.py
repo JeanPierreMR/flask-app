@@ -148,6 +148,19 @@ def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
     data = cursor.fetchall()
     return data
 
+def get_all_houses(page_number):
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, DPI, correo_electronico, 
+    telefono, direccion, tipo, zona, n_habitaciones, n_lavados, precio_dolares, precio_quetzales, metros_cuadrados, 
+    comentarios_adicionales, user_id, house_id
+    FROM houses 
+    LIMIT (?) 
+    OFFSET (?)""",
+                   (5, (page_number-1)*5,))
+    data = cursor.fetchall()
+    return data
+
 def get_house_images(house_id, num_image):
     db = sq.connect("site_db")
     cursor = db.cursor()
