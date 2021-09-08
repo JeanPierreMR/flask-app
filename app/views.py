@@ -1,6 +1,5 @@
-import base64
-
-from flask import Flask, render_template, url_for, request, session, redirect, render_template_string, send_file
+from flask import Flask, render_template, url_for, request, session, redirect, render_template_string, send_file, \
+    send_from_directory
 from app import db_manager
 from app import app
 from app.db_manager import insert_house
@@ -78,17 +77,14 @@ def form_venta1():
 
 @app.route('/imgs')
 def img_house():
-    num_image = request.args.get('num_image', 0, type=int)
+    num_image = request.args.get('num_image', -1, type=int)
     house_id = request.args.get('house_id', 0, type=int)
-    print(house_id)
-
     try:
         file = db_manager.get_house_images(house_id, num_image)
         return send_file(BytesIO(file[0]), mimetype='image/jpeg')
     except Exception as e:
-        print(e)
-        print('tuku')
-        return 'https://pngimage.net/wp-content/uploads/2018/06/nothing-png-7.png'
+        print('sending blank')
+        return send_from_directory(directory='static/img',filename='img.png', as_attachment=True)
 
 @app.route("/form-cita")
 def form_cita():

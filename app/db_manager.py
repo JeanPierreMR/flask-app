@@ -155,8 +155,7 @@ def get_house_images(house_id, num_image):
     FROM photos 
     WHERE house_id=(?)
     LIMIT 1 OFFSET (?)""",
-                   (int(house_id), int(num_image)-1,))
+                   (int(house_id), int(num_image),))
     data = cursor.fetchall()
-    print(f'data {data}\nhouse_id {int(house_id)}\nnum_image {int(num_image)-1}\n')
     return data[0]
 

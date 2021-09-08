@@ -24,7 +24,7 @@
                             {{ house_info }}
                                 <div class="card-body">
                                     <p class="demo">
-                                        {% for n_image in range(5) %}
+                                        {% for n_image in range(1,6) %}
                                             <div class="avatar avatar-xxl">
 {#                                                {% houseid = str(house_info[17]) %}#}
                                                 <img src={{ url_for('img_house', num_image=n_image, house_id=house_info[17] ) }} alt="..." class="avatar-img rounded">
