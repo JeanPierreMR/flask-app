@@ -24,11 +24,11 @@ def home():
         return redirect("/login")
     elif request.method == 'POST' and compra_form.validate():
         #select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
-        page = request.args.get('page', 1, type=int)
-        zone = request.args.get('zone', 9, type=int)
-        typehome = request.args.get('typehome', 'Casa', type=str)
-        roomsnumber = request.args.get('roomsnumber', 1, type=int)
-        roomsbath = request.args.get('roomsbath', 1, type=int)
+        page = request.form['page']
+        zone = request.form['zone']
+        typehome = request.form['typehome']
+        roomsnumber = request.form['roomsnumber']
+        roomsbath = request.form['roomsbath']
 
         houses_info = db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page)
         return render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form)
@@ -44,6 +44,7 @@ def home():
 # -- Form ventas page
 @app.route("/form-venta", methods=["POST", "GET"])
 def form_venta1():
+    compra_form = CompraForm(request.form)
     venta_form = VentaForm(request.form)
     print(f"request.method == 'POST' {request.method == 'POST'} and venta_form.validate_on_submit(){venta_form.validate_on_submit()}")
     if request.method == 'POST':
@@ -71,11 +72,11 @@ def form_venta1():
         return render_template('form_venta.html',
                                msg='Su formulario fue enviado',
                                success=True,
-                               form=venta_form)
+                               form=venta_form, compra_form=compra_form)
     elif not session.get('logged_in'):
         return redirect('/register')
     else:
-        return render_template("form_venta.html", form=venta_form)
+        return render_template("form_venta.html", form=venta_form, compra_form=compra_form)
 
 # @app.route("/multiupload", methods=["POST", "GET"])
 # def multiupload():
@@ -103,13 +104,13 @@ def form_venta1():
 #     return ("rand.html")
 
 @app.route('/imgs')
-def serve_pil_image(pil_img):
-    page = request.args.get('num_image', 0, type=int)
+def img_house():
+    num_image = request.args.get('num_image', 0, type=int)
     house_id = request.args.get('house_id', 0, type=int)
     img_io = StringIO()
-    image = db_manager.get_house_images(house_id)
-    img = Image.open(image)
-    pil_img.save(img_io, 'JPEG', quality=70)
+    file = db_manager.get_house_images(house_id, num_image)
+    img = Image.open(file)
+    img.save(img_io, 'JPEG', quality=70)
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
 

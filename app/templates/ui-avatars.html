@@ -23,29 +23,12 @@
                             {% for house_info in houses_info %}
                                 <div class="card-body">
                                     <p class="demo">
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
+                                        {% for n_image in range(5) %}
+                                            <div class="avatar avatar-xxl">
+                                                <img src={{ url_for('img_house', num_image=n_image, house_id=house_info[20]) }} alt="..." class="avatar-img rounded">
+                                            </div>
+                                        {% endfor %}
 
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
-
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
-
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
-
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
-
-                                        <div class="avatar avatar-xxl">
-                                            <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-                                        </div>
                                     </p>
                                 </div>
                                 <!---Trying something new-->
