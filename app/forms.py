@@ -95,3 +95,10 @@ class VentaForm(FlaskForm):
 
     # photos = FileField(u'photos', id='photos_create', validators=[regexp('^[^/\\]\.jpg$')])
     submit = SubmitField("Enviar")
+
+class CompraForm(FlaskForm):
+    zone = SelectField('Zona', choices=[('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')])
+    typehome = SelectField('Tipo', choices=[('Apartamento', 'Apartamento'), ('Casa', 'Casa')])
+    roomsnumber = SelectField('Habitaciones', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    roomsbath = SelectField('Baños', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    submit = SubmitField("Buscar")

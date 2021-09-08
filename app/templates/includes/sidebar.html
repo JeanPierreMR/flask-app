@@ -60,109 +60,107 @@
 							</span>
 							<h4 class="text-section">Components</h4>
 						</li>
-
+                        <form method="post" action="">
 						<!--- Compra -->
-						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
-							<a data-toggle="collapse" href="#base">
-								<i class="fas flaticon-shopping-bag"></i>
-								<p>Compra</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="base">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="#">
-											<span class="sub">   Zona </span>
-										</a>
-									</li>
-									<li>
-										<a>
-										<span class="sub-item"></span>
-									<select class="selectpicker">
-										<option>9</option>
-										<option>10</option>
-										<option>14</option>
-										<option>15</option>
-										<option>16</option>
-									  </select>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span class="sub">Tipo de vivienda</span>
-										</a>
-									</li>
-									<li>
-										<a>
-										<span class="sub-item"></span>
-									<select class="selectpicker">
-										<option>Casa</option>
-										<option>Apartamento</option>
-									  </select>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span class="sub">Número de habitaciones</span>
-										</a>
-									</li>
-									<li>
-										<a>
-										<span class="sub-item"></span>
-									<select class="selectpicker">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									  </select>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span class="sub">Número de baños</span>
-										</a>
-									</li>
-									<li>
-										<a>
-										<span class="sub-item"></span>
-									<select class="selectpicker">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>No tengo preferencia</option>
-									  </select>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span class="sub">Área de residencia</span>
-										</a>
-									</li>
-									<li>
-										<a>
-										<span class="sub-item"></span>
-									<select class="selectpicker">
-										<option>Colonia</option>
-										<option>Condominio</option>
-										<option>Sobre calle pública</option>
-										<option>No tengo preferencia</option>
-									  </select>
-										</a>
-									</li>
-									<li class="mx-4 mt-2">
-										<a target="_blank"
-										   href="/ui-avatars.html"
-										   class="btn btn-primary">
-											<span class="btn-primary"> <i class="fa flaticon-search-2"></i> </span>Buscar</a>
-									</li>
-									<li>
-								</ul>
-							</div>
-						</li>
+                            <li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+                                <a data-toggle="collapse" href="#base">
+                                    <i class="fas flaticon-shopping-bag"></i>
+                                    <p>Compra</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="base">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub">   Zona </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                            <span class="sub-item"></span>
+                                        {{ compra_form.zone(placeholder="9", class="selectpicker") }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub">Tipo de vivienda</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                <span class="sub-item"></span>
+    {#									<select class="selectpicker">#}
+    {#										<option>Casa</option>#}
+    {#										<option>Apartamento</option>#}
+    {#									  </select>#}
+                                                {{ compra_form.typehome(placeholder="Casa", class="selectpicker") }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub">Número de habitaciones</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                            <span class="sub-item"></span>
+    {#									<select class="selectpicker">#}
+    {#										<option>1</option>#}
+    {#										<option>2</option>#}
+    {#										<option>3</option>#}
+    {#										<option>4</option>#}
+    {#										<option>5</option>#}
+    {#									  </select>#}
+                                                {{ compra_form.roomsnumber(placeholder="1", class="selectpicker") }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub">Número de baños</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                            <span class="sub-item"></span>
+    {#									<select class="selectpicker">#}
+    {#										<option>1</option>#}
+    {#										<option>2</option>#}
+    {#										<option>3</option>#}
+    {#										<option>4</option>#}
+    {#										<option>No tengo preferencia</option>#}
+    {#									  </select>#}
+                                                {{ compra_form.roomsbath(placeholder="1", class="selectpicker") }}
+                                            </a>
+                                        </li>
+    {#									<li>#}
+    {#										<a href="#">#}
+    {#											<span class="sub">Área de residencia</span>#}
+    {#										</a>#}
+    {#									</li>#}
+    {#									<li>#}
+    {#										<a>#}
+    {#										<span class="sub-item"></span>#}
+    {#									<select class="selectpicker">#}
+    {#										<option>Colonia</option>#}
+    {#										<option>Condominio</option>#}
+    {#										<option>Sobre calle pública</option>#}
+    {#										<option>No tengo preferencia</option>#}
+    {#									  </select>#}
+    {#										</a>#}
+    {#									</li>#}
+                                        <li class="mx-4 mt-2">
+{#                                            <a target="_blank"#}
+{#                                               href="/ui-avatars.html"#}
+{#                                               class="btn btn-primary">#}
+{#                                                <span class="btn-primary"> <i class="fa flaticon-search-2"></i> </span>Buscar</a>#}
+                                            {{ compra_form.submit(class="btn btn-succes") }}
+                                        </li>
+                                        <li>
+                                    </ul>
+                                </div>
+                            </li>
 						<!--- end compra-->
-
+                        </form>
 
 						<!--renta -->
 						<li class="nav-item {% if 'layout' in segment %} active {% endif %}">

@@ -4,7 +4,7 @@ from flask import Flask, render_template, url_for, request, session, redirect, r
 from app import db_manager
 from app import app
 from app.db_manager import insert_house
-from app.forms import LoginForm, CreateAccountForm, VentaForm
+from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm
 from PIL import Image
 from io import StringIO
 # -- calling the create function each time
@@ -18,26 +18,35 @@ db_manager.create()
 @app.route("/home")
 @app.route("/forms")
 def home():
+    compra_form = CompraForm(request.form)
     # Session control
     if not session.get('logged_in'):
         return redirect("/login")
-    else:
+    elif request.method == 'POST' and compra_form.validate():
         #select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
         page = request.args.get('page', 1, type=int)
-        zone = request.args.get('zone', 1, type=int)
+        zone = request.args.get('zone', 9, type=int)
         typehome = request.args.get('typehome', 'Casa', type=str)
         roomsnumber = request.args.get('roomsnumber', 1, type=int)
         roomsbath = request.args.get('roomsbath', 1, type=int)
-        print(db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page))
-        return render_template("ui-avatars.html", pagination_page=page)
 
+        houses_info = db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page)
+        return render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form)
+    else:
+        page = 1
+        zone = 9
+        typehome = 'Casa'
+        roomsnumber = 1
+        roomsbath = 1
+        houses_info = db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page)
+        return render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form)
 
 # -- Form ventas page
 @app.route("/form-venta", methods=["POST", "GET"])
 def form_venta1():
     venta_form = VentaForm(request.form)
     print(f"request.method == 'POST' {request.method == 'POST'} and venta_form.validate_on_submit(){venta_form.validate_on_submit()}")
-    if request.method == 'POST' :
+    if request.method == 'POST':
         print(dict(request.form))
         name1 = request.form['name1']
         name2 = request.form['name2']
@@ -68,34 +77,38 @@ def form_venta1():
     else:
         return render_template("form_venta.html", form=venta_form)
 
-@app.route("/multiupload", methods=["POST", "GET"])
-def multiupload():
-    if request.method == 'GET':
-        return render_template("rand.html")
-    print(dict(request.form))
-    print(dict(request.files))
-    print('afdg: {}'.format(request.files.getlist('file')))
-    for uploaded_file in request.files.getlist('file'):
-        # print(uploaded_file)
-        # print(uploaded_file.read())
-        img = Image.open(uploaded_file)
-        data = base64.b64encode(npimg)
-        print(data)
-        return render_template_string('<img src="data:image/png;base64,{}">'.format(base64.b64encode(data)))
-    file_obj = request.files
-    for f in file_obj:
-        file = request.files.get(f)
-        print(file)
-        print(f)
-    files = request.files.getlist('files[]')
-    files2 = request.files.getlist('charts')
-    print(files)
-    print(files2)
-    return ("rand.html")
+# @app.route("/multiupload", methods=["POST", "GET"])
+# def multiupload():
+#     if request.method == 'GET':
+#         return render_template("rand.html")
+#     print(dict(request.form))
+#     print(dict(request.files))
+#     print('afdg: {}'.format(request.files.getlist('file')))
+#     for uploaded_file in request.files.getlist('file'):
+#         # print(uploaded_file)
+#         # print(uploaded_file.read())
+#         img = Image.open(uploaded_file)
+#         data = base64.b64encode(npimg)
+#         print(data)
+#         return render_template_string('<img src="data:image/png;base64,{}">'.format(base64.b64encode(data)))
+#     file_obj = request.files
+#     for f in file_obj:
+#         file = request.files.get(f)
+#         print(file)
+#         print(f)
+#     files = request.files.getlist('files[]')
+#     files2 = request.files.getlist('charts')
+#     print(files)
+#     print(files2)
+#     return ("rand.html")
 
-@app.route('/imgs/<filename>')
+@app.route('/imgs')
 def serve_pil_image(pil_img):
+    page = request.args.get('num_image', 0, type=int)
+    house_id = request.args.get('house_id', 0, type=int)
     img_io = StringIO()
+    image = db_manager.get_house_images(house_id)
+    img = Image.open(image)
     pil_img.save(img_io, 'JPEG', quality=70)
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')

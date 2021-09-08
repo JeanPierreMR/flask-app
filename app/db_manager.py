@@ -153,10 +153,19 @@ def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
     WHERE Zona=(?) AND TIPO=(?) AND n_habitaciones=(?) AND n_lavados=(?)
     LIMIT (?) 
     OFFSET (?)""",
-                   (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,))
+                   (zone, typehome, roomsnumber, roomsbath, 5, (page_number-1)*5,))
     data = cursor.fetchall()
     return data
 
+def get_house_images(house_id):
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""SELECT photos
+    FROM houses 
+    WHERE house_id=(?)""",
+                   (house_id,))
+    data = cursor.fetchall()
+    return data
 # create()
 # db = sq.connect("site_db")
 # cursor = db.cursor()
