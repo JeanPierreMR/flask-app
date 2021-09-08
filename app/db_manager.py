@@ -32,11 +32,11 @@ def create():
                 tipo TEXT,
                 zona NUMERIC,
                 n_habitaciones NUMERIC,
+                n_lavados NUMERIC,
                 precio_dolares FLOAT,
                 precio_quetzales FLOAT,
                 metros_cuadrados FLOAT,
                 comentarios_adicionales TEXT,
-                photos BLOB NOT NULL,
                 user_id INTEGER,
                 FOREIGN KEY (user_id) REFERENCES user (user_id))
             """)
@@ -118,17 +118,56 @@ def test_draft():
     return data
 
 # insert house
-def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos):
+def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images):
     # name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos
 
     db = sq.connect("site_db")
     cursor = db.cursor()
     cursor.execute("""INSERT INTO houses (
         primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, 
-        DPI, correo_electronico, telefono, direccion, tipo, zona, n_habitaciones, 
-        precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, photos, user_id
+        DPI, correo_electronico, telefono, direccion, tipo, zona, n_habitaciones, n_lavados,
+        precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, user_id
     ) VALUES(?, ?, ?, ?, 
         ?, ?, ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ?, ?)""", (name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, photos, user_id))
+        ?, ?, ?, ?, ?, ?)""",
+                   (str(name1), str(name2), str(lastname1), str(lastname2), int(dpi), str(email1), int(phone), str(address), str(typehome), int(zone),
+                    int(roomsnumber), int(roomsbath), float(pricedol), float(pricequet), int(meters), str(comments), int(user_id[0]),))
+    house_id = cursor.lastrowid
+    print(house_id)
+    for image in images:
+        cursor.execute("""INSERT INTO photos (
+                photos,
+                house_id,
+            ) VALUES(?, ?)""",
+                       (image, house_id,))
+    print(house_id)
     db.commit()
     db.close()
+
+def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
+    db = sq.connect("site_db")
+    cursor = db.cursor()
+    cursor.execute("""SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, DPI, correo_electronico, 
+    telefono, direccion, tipo, zona, n_habitaciones, n_lavados, precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, user_id 
+    FROM houses 
+    WHERE Zona=(?) AND TIPO=(?) AND n_habitaciones=(?) AND n_lavados=(?)
+    LIMIT (?) 
+    OFFSET (?)""",
+                   (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,))
+    data = cursor.fetchall()
+    return data
+
+# create()
+# db = sq.connect("site_db")
+# cursor = db.cursor()
+# cursor.execute("""INSERT INTO houses (
+#     primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+#     DPI, correo_electronico, telefono, direccion, tipo, zona, n_habitaciones, n_lavados,
+#     precio_dolares, precio_quetzales, metros_cuadrados, comentarios_adicionales, user_id
+# ) VALUES(?, ?, ?, ?,
+#     ?, ?, ?, ?, ?, ?, ?,
+#     ?, ?, ?, ?, ?, ?)""",
+#                ("name1", "name2", "lastname1", "lastname2", 123, "email1", 123, "address", "typehome", 123,
+#                 123, 123, 123.0, 123.0, 123, "str(comments)", 1,))
+# db.commit()
+# db.close()

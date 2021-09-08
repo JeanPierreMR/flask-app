@@ -94,4 +94,4 @@ class VentaForm(FlaskForm):
     )
 
     # photos = FileField(u'photos', id='photos_create', validators=[regexp('^[^/\\]\.jpg$')])
-    submit = SubmitField("Send")
+    submit = SubmitField("Enviar")

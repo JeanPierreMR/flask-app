@@ -13,159 +13,125 @@
 				<h4 class="page-title">Opciones</h4>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<h4 class="card-title">Tus opciones</h4>
-							
-						</div>
-						<div class="card-body">
-							<p class="demo">
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
+                {% for page_num in [pagination_prev_num,pagination_page,pagination_next_num] %}
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Tus opciones</h4>
 
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
+                            </div>
+                            <div class="card-body">
+                                <p class="demo">
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
 
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
 
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
 
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
 
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
-								</div>
-							</p>
-						</div>
-						<!---Trying something new-->
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Información</h4>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-5 col-md-4">
-											<div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
-												<!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
-												<a target="_blank"
-												   href="/form-cita"
-												   class="btn btn-secondary">
-													Hacer Cita</a>
-											</div>
-										</div>
-										<div class="col-7 col-md-8">
-											<div class="tab-content" id="v-pills-without-border-tabContent">
-												<div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
-													<p>Zona</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
 
-
-													<p>Habitaciones</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
-
-													<p>Baños</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!---end something new-->
-
-						<div class="card-body">
-							<p class="demo">
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-
-								<div class="avatar avatar-xxl">
-									<img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
-								</div>
-							</p>
-						</div>
-						<!---Again something new--><div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Información</h4>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-5 col-md-4">
-											<div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
-												<!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
-												<a target="_blank"
-												   href="/form-cita"
-												   class="btn btn-secondary">
-													Hacer Cita</a>
-											</div>
-										</div>
-										<div class="col-7 col-md-8">
-											<div class="tab-content" id="v-pills-without-border-tabContent">
-												<div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
-													<p>Zona</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/casa10.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+                                </p>
+                            </div>
+                            <!---Trying something new-->
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Información</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5 col-md-4">
+                                                <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
+                                                    <!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
+                                                    <a target="_blank"
+                                                       href="/form-cita"
+                                                       class="btn btn-secondary">
+                                                        Hacer Cita</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 col-md-8">
+                                                <div class="tab-content" id="v-pills-without-border-tabContent">
+                                                    <div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
+                                                        <p>Zona</p>
+                                                        <input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
 
 
-													<p>Habitaciones</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
+                                                        <p>Habitaciones</p>
+                                                        <input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
 
-													<p>Baños</p>
-													<input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!---end of something new again-->
-					</div>
+                                                        <p>Baños</p>
+                                                        <input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---end something new-->
 
-					<div class="col-md-4">
-						<div class="card card-primary">
-							<div class="card-header">
-								<div class="card-title">Anuncios</div>
-								<div class="card-category"></div>
-							</div>
-							<div class="card-body pb-0">
-								<div class="mb-4 mt-2">
-									<h1></h1>
-								</div>
-								<div class="pull-in">
-									<canvas id="dailySalesChart"></canvas>
-								</div>
-							</div>
-						</div>
-				</div>
-			</div>
+                            <div class="card-body">
+                                <p class="demo">
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+
+                                    <div class="avatar avatar-xxl">
+                                        <img src="/static/assets/img/Apartamentozona14.jpg" alt="..." class="avatar-img rounded">
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+{#					<div class="col-md-4">#}
+{#						<div class="card card-primary">#}
+{#							<div class="card-header">#}
+{#								<div class="card-title">Anuncios</div>#}
+{#								<div class="card-category"></div>#}
+{#							</div>#}
+{#							<div class="card-body pb-0">#}
+{#								<div class="mb-4 mt-2">#}
+{#									<h1></h1>#}
+{#								</div>#}
+{#								<div class="pull-in">#}
+{#									<canvas id="dailySalesChart"></canvas>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+{#				</div>#}
+
 		</div>
 	</div>
 <div class="pagination">

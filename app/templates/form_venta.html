@@ -22,7 +22,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card">
-                        <form method="post" action="">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {{ form.csrf_token }}
                             <div class="card-header">
                                 <div class="card-title">Datos</div>
                             </div>
@@ -34,38 +35,37 @@
                                         <div class="form-group form-group-default">
                                             <label>Nombre</label>
     {#										<input id="Name" type="text" class="form-control" placeholder="Primer nombre">#}
-                                            {{ form.name1(placeholder="Nombre", class="form-control") }}
+                                            {{ form.name1(placeholder="Primer nombre", class="form-control") }}
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <input id="Name" type="text" class="form-control" placeholder="Segundo nombre">
-                                            {{ form.name2(placeholder="Nombre", class="form-control") }}
+{#                                            <input id="Name" type="text" class="form-control" placeholder="Segundo nombre">#}
+                                            {{ form.name2(placeholder="Segundo nombre", class="form-control") }}
                                         </div>
                                         <div class="form-group form-group-default">
                                             <label>Apellidos</label>
-                                            <input id="Name" type="text" class="form-control" placeholder="Primer apellido">
-                                            {{ form.lastname1(placeholder="Apellido", class="form-control") }}
+{#                                            <input id="Name" type="text" class="form-control" placeholder="Primer apellido">#}
+                                            {{ form.lastname1(placeholder="Primer apellido", class="form-control") }}
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <input id="Name" type="text" class="form-control" placeholder="Segundo apellido">
-                                            {{ form.lastname2(placeholder="Apellido", class="form-control") }}
+{#                                            <input id="Name" type="text" class="form-control" placeholder="Segundo apellido">#}
+                                            {{ form.lastname2(placeholder="Segundo apellido", class="form-control") }}
                                         </div>
                                         <div class="form-group form-inline">
                                             <label for="inlineinput" class="col-md-3 col-form-label">DPI</label>
                                             <div class="col-md-9 p-0">
-                                                <input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese DPI">
+{#                                                <input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese DPI">#}
                                                 {{ form.dpi(placeholder="DPI", class="form-control") }}
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="email2">Correo electrónico</label>
-                                            <input type="email" class="form-control" id="email2" placeholder="Ingrese correo">
+                                            <label for="correo_electronico_create">Correo electrónico</label>
                                             {{ form.email1(placeholder="Correo electronico", class="form-control") }}
                                             <small id="emailHelp2" class="form-text text-muted">Nunca compartiremos su correo electrónico ingresado.</small>
                                         </div>
                                         <div class="form-group form-inline">
                                             <label for="inlineinput" class="col-md-3 col-form-label">Teléfono</label>
                                             <div class="col-md-9 p-0">
-                                                <input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese número">
+{#                                                <input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese número">#}
                                                 {{ form.phone(placeholder="Telefono", class="form-control") }}
                                             </div>
                                         </div>
@@ -74,18 +74,18 @@
                                         <!---Tipo de vivienda -->
                                         <label class="mt-3 mb-3"><b>Tipo de vivienda</b></label>
                                         <div class="form-group form-floating-label">
-                                            <input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>
+{#                                            <input id="inputFloatingLabel2" type="text" class="form-control input-solid" required>#}
                                             {{ form.address(placeholder="Direccion", class="form-control") }}
                                             <label for="inputFloatingLabel2" class="placeholder">Dirección exacta</label>
                                         </div>
                                         <div class="form-group form-floating-label">
-                                            <select class="form-control input-solid" id="selectFloatingLabel2" required>
-                                                <option value="">&nbsp;</option>
-                                                <option>Apartamento</option>
-                                                <option>Casa</option>
-                                            </select>
+{#                                            <select class="form-control input-solid" id="selectFloatingLabel2" required>#}
+{#                                                <option value="">&nbsp;</option>#}
+{#                                                <option>Apartamento</option>#}
+{#                                                <option>Casa</option>#}
+{#                                            </select>#}
                                             {{ form.typehome(class="form-control" ) }}
-                                            <label for="selectFloatingLabel2" class="placeholder">Tipo</label>
+{#                                            <label for="selectFloatingLabel2" class="placeholder">Tipo</label>#}
                                         </div>
 
                                         <!---end tipo de vivienda-->
@@ -112,35 +112,35 @@
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Zona</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>9</option>
-                                                <option>10</option>
-                                                <option>14</option>
-                                                <option>15</option>
-                                                <option>16</option>
-                                            </select>
+{#                                            <select class="form-control" id="exampleFormControlSelect1">#}
+{#                                                <option>9</option>#}
+{#                                                <option>10</option>#}
+{#                                                <option>14</option>#}
+{#                                                <option>15</option>#}
+{#                                                <option>16</option>#}
+{#                                            </select>#}
                                             {{ form.zone(class="form-control") }}
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Cantidad de habitaciones</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
+{#                                            <select class="form-control" id="exampleFormControlSelect1">#}
+{#                                                <option>1</option>#}
+{#                                                <option>2</option>#}
+{#                                                <option>3</option>#}
+{#                                                <option>4</option>#}
+{#                                                <option>5</option>#}
+{#                                            </select>#}
                                             {{ form.roomsnumber(class="form-control") }}
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Cantidad de baños</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
+{#                                            <select class="form-control" id="exampleFormControlSelect1">#}
+{#                                                <option>1</option>#}
+{#                                                <option>2</option>#}
+{#                                                <option>3</option>#}
+{#                                                <option>4</option>#}
+{#                                                <option>5</option>#}
+{#                                            </select>#}
                                             {{ form.roomsbath(class="form-control") }}
                                         </div>
                                         <div class="form-group">
@@ -149,7 +149,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
                                                 </div>
-                                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+{#                                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">#}
                                                 {{ form.pricedol(placeholder="Precio dolares", class="form-control") }}
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">.00</span>
@@ -162,7 +162,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Q</span>
                                                 </div>
-                                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+{#                                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">#}
                                                 {{ form.pricequet(placeholder="Precio quetzales", class="form-control") }}
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">.00</span>
@@ -174,18 +174,18 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Metros cuadrados de la propiedad</span>
                                                 </div>
-                                                <textarea class="form-control" aria-label="With textarea"></textarea>
+{#                                                <textarea class="form-control" aria-label="With textarea"></textarea>#}
                                                 {{ form.meters(placeholder="Metros cuadrados", class="form-control") }}
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlFile1">Subir imagenes de vivienda</label>
-                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" multiple>
+{#                                                <input type="file" name="file" multiple>#}
                                                 {{form.images(class="form-control-file") }}
                                             </div>
                                             <div class="form-group">
                                                 <label for="comment">Comentarios adicionales</label>
-                                                <textarea class="form-control" id="comment" rows="5">
-                                                </textarea>
+{#                                                <textarea class="form-control" id="comment" rows="5">#}
+{#                                                </textarea>#}
                                                 {{ form.comments(placeholder="Comentarios", class="form-control") }}
                                             </div>
                                             <div class="form-check">
@@ -269,7 +269,7 @@
                                 </div>
 
                             <div class="card-action">
-                                <button class="btn btn-success" type="submit">Enviar</button>
+                                {{ form.submit(class="btn btn-succes") }}
                                 <button class="btn btn-danger" type="reset">Cancelar</button>
                             </div>
                         </form>

@@ -1,9 +1,12 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+import base64
+
+from flask import Flask, render_template, url_for, request, session, redirect, render_template_string, send_file
 from app import db_manager
 from app import app
 from app.db_manager import insert_house
 from app.forms import LoginForm, CreateAccountForm, VentaForm
-
+from PIL import Image
+from io import StringIO
 # -- calling the create function each time
 db_manager.create()
 
@@ -19,7 +22,13 @@ def home():
     if not session.get('logged_in'):
         return redirect("/login")
     else:
+        #select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
         page = request.args.get('page', 1, type=int)
+        zone = request.args.get('zone', 1, type=int)
+        typehome = request.args.get('typehome', 'Casa', type=str)
+        roomsnumber = request.args.get('roomsnumber', 1, type=int)
+        roomsbath = request.args.get('roomsbath', 1, type=int)
+        print(db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page))
         return render_template("ui-avatars.html", pagination_page=page)
 
 
@@ -27,7 +36,8 @@ def home():
 @app.route("/form-venta", methods=["POST", "GET"])
 def form_venta1():
     venta_form = VentaForm(request.form)
-    if request.method == 'POST':
+    print(f"request.method == 'POST' {request.method == 'POST'} and venta_form.validate_on_submit(){venta_form.validate_on_submit()}")
+    if request.method == 'POST' :
         print(dict(request.form))
         name1 = request.form['name1']
         name2 = request.form['name2']
@@ -45,10 +55,10 @@ def form_venta1():
         pricequet = request.form['pricequet']
         meters = request.form['meters']
         comments = request.form['comments']
-        images = request.form['images']
         user_id = session['user_id']
-        print(f"type: {type(images)} ")
-        # insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
+
+        images = request.files.getlist('file')
+        insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber, roomsbath, pricedol, pricequet, meters, comments, images)
         return render_template('form_venta.html',
                                msg='Su formulario fue enviado',
                                success=True,
@@ -58,6 +68,37 @@ def form_venta1():
     else:
         return render_template("form_venta.html", form=venta_form)
 
+@app.route("/multiupload", methods=["POST", "GET"])
+def multiupload():
+    if request.method == 'GET':
+        return render_template("rand.html")
+    print(dict(request.form))
+    print(dict(request.files))
+    print('afdg: {}'.format(request.files.getlist('file')))
+    for uploaded_file in request.files.getlist('file'):
+        # print(uploaded_file)
+        # print(uploaded_file.read())
+        img = Image.open(uploaded_file)
+        data = base64.b64encode(npimg)
+        print(data)
+        return render_template_string('<img src="data:image/png;base64,{}">'.format(base64.b64encode(data)))
+    file_obj = request.files
+    for f in file_obj:
+        file = request.files.get(f)
+        print(file)
+        print(f)
+    files = request.files.getlist('files[]')
+    files2 = request.files.getlist('charts')
+    print(files)
+    print(files2)
+    return ("rand.html")
+
+@app.route('/imgs/<filename>')
+def serve_pil_image(pil_img):
+    img_io = StringIO()
+    pil_img.save(img_io, 'JPEG', quality=70)
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/jpeg')
 
 @app.route("/form-cita")
 def form_cita():
