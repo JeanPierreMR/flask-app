@@ -8,6 +8,7 @@ from flask_wtf.file import FileAllowed, FileRequired
 from collections import Iterable
 from werkzeug.datastructures import FileStorage
 
+
 class LoginForma(FlaskForm):
     user = TextField(u'Usuario', validators=[Required()])
     password = PasswordField(u'Contraseña', validators=[Required()])
@@ -32,8 +33,6 @@ class CreateAccountForm(FlaskForm):
     username = TextField('Username', id='username_create', validators=[DataRequired()])
     email = TextField('Email', id='email_create', validators=[DataRequired(), Email()])
     password = PasswordField('Password', id='pwd_create', validators=[DataRequired()])
-
-
 
 
 class MultiFileAllowed(object):
@@ -68,6 +67,7 @@ class MultiFileAllowed(object):
                     'File does not have an approved extension.'
                 ))
 
+
 class VentaForm(FlaskForm):
     name1 = TextField('primer_nombre', id='primer_nombre_create', validators=[DataRequired()])
     name2 = TextField('segundo_nombre', id='segundo_nombre_create', validators=[DataRequired()])
@@ -77,10 +77,10 @@ class VentaForm(FlaskForm):
     email1 = TextField('correo_electronico', id='correo_electronico_create', validators=[DataRequired()])
     phone = IntegerField('telefono', id='telefono_create', validators=[DataRequired()])
     address = TextField('direccion', id='direccion_create', validators=[DataRequired()])
-    typehome = SelectField('Tipo', choices = [('Apartamento', 'Apartamento'), ('Casa', 'Casa')])
-    zone = SelectField('Zona', choices = [('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')] )
-    roomsnumber = SelectField('Habitaciones', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]   )
-    roomsbath = SelectField('Baños', choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]   )
+    typehome = SelectField('Tipo', choices=[('Apartamento', 'Apartamento'), ('Casa', 'Casa')])
+    zone = SelectField('Zona', choices=[('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')])
+    roomsnumber = SelectField('Habitaciones', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    roomsbath = SelectField('Baños', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
     pricedol = FloatField('precio_dolares', id='precio_dolares_create', validators=[DataRequired()])
     pricequet = FloatField('precio_quetzales', id='precio_quetzales_create', validators=[DataRequired()])
     meters = FloatField('metros_cuadrados', id='metros_cuadrados_create', validators=[DataRequired()])
@@ -95,6 +95,7 @@ class VentaForm(FlaskForm):
 
     # photos = FileField(u'photos', id='photos_create', validators=[regexp('^[^/\\]\.jpg$')])
     submit = SubmitField("Enviar")
+
 
 class CompraForm(FlaskForm):
     zone = SelectField('Zona', choices=[('9', '9'), ('10', '10'), ('14', '14'), ('15', '15'), ('16', '16')])

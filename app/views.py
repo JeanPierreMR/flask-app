@@ -28,7 +28,7 @@ def home():
         typehome = request.form['typehome']
         roomsnumber = request.form['roomsnumber']
         roomsbath = request.form['roomsbath']
-        print("main load foarm")
+
         houses_info = db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page)
         resp = make_response(
             render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form))
@@ -44,7 +44,6 @@ def home():
         typehome = request.cookies.get('typehome', default='Casa')
         roomsnumber = request.cookies.get('roomsnumber', default=1)
         roomsbath = request.cookies.get('roomsbath', default=1)
-        print("else,. no form")
         houses_info = db_manager.get_houses(int(zone), typehome, int(roomsnumber), int(roomsbath), page)
         resp = make_response(
             render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form))
