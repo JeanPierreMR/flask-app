@@ -26,32 +26,39 @@
 									<div class="form-group form-group-default">
 										<label>Nombre</label>
 										<input id="Name" type="text" class="form-control" placeholder="Primer nombre">
+										{{ form.name3(placeholder="Primer nombre", class="form-control") }}
 									</div>
 									<div class="form-group form-group-default">
 										<input id="Name" type="text" class="form-control" placeholder="Segundo nombre">
+										{{ form.name4(placeholder="Segundo nombre", class="form-control") }}
 									</div>
 									<div class="form-group form-group-default">
 										<label>Apellidos</label>
 										<input id="Name" type="text" class="form-control" placeholder="Primer apellido">
+										{{ form.lastname3(placeholder="Primer apellido", class="form-control") }}
 									</div>
 									<div class="form-group form-group-default">
 										<input id="Name" type="text" class="form-control" placeholder="Segundo apellido">
+										{{ form.lastname4(placeholder="Segundo apellido", class="form-control") }}
 									</div>
 									<div class="form-group form-inline">
 										<label for="inlineinput" class="col-md-3 col-form-label">DPI</label>
 										<div class="col-md-9 p-0">
 											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese DPI">
+											{{ form.dpi1(placeholder="DPI", class="form-control") }}
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="email2">Correo electrónico</label>
 										<input type="email" class="form-control" id="email2" placeholder="Ingrese correo">
+										{{ form.email2(placeholder="Correo electronico", class="form-control") }}
 										<small id="emailHelp2" class="form-text text-muted">Nunca compartiremos su correo electrónico ingresado.</small>
 									</div>
 									<div class="form-group form-inline">
 										<label for="inlineinput" class="col-md-3 col-form-label">Teléfono</label>
 										<div class="col-md-9 p-0">
 											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese número">
+											{{ form.phone1(placeholder="Telefono", class="form-control") }}
 										</div>
 									</div>
 									<!---end datos personales-->
@@ -79,18 +86,20 @@
 									<div class="form-group">
 										<label for="exampleFormControlSelect1">Calendario</label>
 										<select class="form-control" id="exampleFormControlSelect1">
-											<option>Fecha 1</option>
-											<option>Fecha 2</option>
-											<option>Fecha 3</option>
+											<option>10 de noviembre</option>
+											<option>11 de noviembre</option>
+											<option>12 de noviembre</option>
 										</select>
+										{{ form.date(class="form-control") }}
 									</div>	
 									<div class="form-group">
 										<label for="exampleFormControlSelect1">Horario</label>
 										<select class="form-control" id="exampleFormControlSelect1">
-											<option>Hora 1</option>
-											<option>Hora 2</option>
-											<option>Hora 3</option>
+											<option>1</option>
+											<option>3</option>
+											<option>4</option>
 										</select>
+										{{ form.hour(class="form-control") }}
 									</div>	
 									
 									<div class="form-group">

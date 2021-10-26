@@ -3,11 +3,13 @@ from flask import Flask, render_template, url_for, request, session, redirect, r
 from app import db_manager
 from app import app
 from app.db_manager import insert_house
-from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm
+from app.db_manager import insert_cita
+from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm, CitaForm
 from io import BytesIO
 
 # -- calling the create function each time
-db_manager.create()
+db_manager.db.drop_all()
+db_manager.db.create_all()
 
 
 # -- mapping for home page(root)
@@ -80,6 +82,7 @@ def form_venta1():
         pricequet = request.form['pricequet']
         meters = request.form['meters']
         comments = request.form['comments']
+        print(session['user_id'])
         user_id = session['user_id']
         images = request.files.getlist('images')
         insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone,
@@ -101,15 +104,13 @@ def img_house():
     print(f'{num_image}, {house_id}')
     try:
         file = db_manager.get_house_images(house_id, num_image)
-        return send_file(BytesIO(file[0]), mimetype='image/jpeg')
+        return send_file(BytesIO(file[0].photos), mimetype='image/jpeg')
     except Exception as e:
         # print('sending blank')
         return send_from_directory(directory='static/img', filename='img.png', as_attachment=True)
 
 
-@app.route("/form-cita")
-def form_cita():
-    return render_template("form_cita.html")
+
 
 
 # -------- User control -------#
@@ -199,6 +200,48 @@ def full_output():
             render_template("ui-avatars-full.html", pagination_page=page,
                             houses_info=houses_info, compra_form=compra_form))
         return resp
+
+@app.route("/db_test")
+def db_test():
+    db_manager.insert_user('gola','hola',b'hola')
+    pola = []
+    for x in db_manager.Users.query.all():
+        pola.append(type(x))
+        print(x)
+    print(pola)
+    for x in pola:
+        print(f'x: [{x}]')
+    return (str(pola))
+
+
+  #CREATE APPOINTMENT
+@app.route("/form_cita", methods=["POST", "GET"])
+def form_cita1():
+    cita_form = CitaForm(request.form)
+    print(session.get('logged_in'))
+    if not session.get('logged_in'):
+        return redirect('/register')
+    elif request.method == 'POST':
+        print(dict(request.form))
+        name3 = request.form['name1']
+        name4 = request.form['name2']
+        lastname3 = request.form['lastname1']
+        lastname4 = request.form['lastname2']
+        dpi1 = request.form['dpi']
+        email2 = request.form['email1']
+        phone1 = request.form['phone']
+        date = request.form['date']
+        hour = request.form['hour']
+        user_id = session['user_id']
+        insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour)
+        return render_template('form_cita.html',
+                               msg='Su cita fue agendada',
+                               success=True,
+                               form=cita_form)
+    # elif not session.get('logged_in'):
+    #     return redirect('/register')
+    else:
+        return render_template("form_cita.html", form=cita_form)
 
 
 if __name__ == "__main__":

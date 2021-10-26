@@ -103,3 +103,19 @@ class CompraForm(FlaskForm):
     roomsnumber = SelectField('Habitaciones', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
     roomsbath = SelectField('Baños', choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
     submit = SubmitField("Buscar")
+
+
+class CitaForm(FlaskForm):
+    name3 = TextField('primer_nombre', id='primer_nombre_create', validators=[DataRequired()])
+    name4 = TextField('segundo_nombre', id='segundo_nombre_create', validators=[DataRequired()])
+    lastname3 = TextField('primer_apellido', id='primer_apellido_create', validators=[DataRequired()])
+    lastname4 = TextField('segundo_apellido', id='segundo_apellido_create', validators=[DataRequired()])
+    dpi1 = IntegerField('DPI', id='DPI_create', validators=[DataRequired()])
+    email2 = TextField('correo_electronico', id='correo_electronico_create', validators=[DataRequired()])
+    phone1 = IntegerField('telefono', id='telefono_create', validators=[DataRequired()])
+    date = SelectField('Calendario', choices=[('10 de noviembre', '10 de noviembre'), ('11 de noviembre', '11 de noviembre'),('12 de noviembre','12 de noviembre')])
+    hour = SelectField('Horario', choices=[('1', '1'), ('3', '3'), ('4', '4')])
+
+    submit = SubmitField("Enviar")
+
+
