@@ -5,7 +5,12 @@ import sqlalchemy
 
 from app import db as db
 
+# connect to our cluster
+from elasticsearch import Elasticsearch
 
+es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+es.indices.delete(index='houses_index', ignore=[400, 404])
+es.indices.delete(index='citas_index', ignore=[400, 404])
 class Users(db.Model):
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True)
@@ -160,6 +165,8 @@ def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone
                        metros_cuadrados=meters, comentarios_adicionales=comments, user_id=user_id)
     db.session.add(new_house)
     db.session.commit()
+    es.index(index='houses_index', id=new_house.house_id,
+             body={'comment': comments, 'id': new_house.house_id})
 
     for image in images:
         new_image = Photos(photos=image.read(), house_id=new_house.house_id)
@@ -171,6 +178,7 @@ def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
     data = Houses.query.filter_by(
         zona=zone, tipo=typehome, n_habitaciones=roomsnumber, n_lavados=roomsbath
     ).offset((page_number - 1) * 5).limit(5).all()
+    print(f"data> {data}")
     return data
     data = sqlalchemy.select(
         [Houses.primer_nombre, Houses.segundo_nombre, Houses.primer_apellido, Houses.segundo_apellido,
@@ -197,8 +205,9 @@ def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
 
 
 def remove_house(id):
-    # remove house
-    pass
+    es.delete(index="houses_index", id=id)
+    data = Houses.query.filter_by(house_id=id).delete()
+
 
 
 def get_all_houses(page_number):
@@ -247,11 +256,60 @@ def get_house_images(house_id, num_image):
     return data[0]
 
 
-def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour):
+def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour, comments):
     new_cita = Citas(user_id=user_id, name3=name3, name4=name4, lastname3=lastname3, lastname4=lastname4, dpi1=dpi1,
                      email2=email2, phone1=phone1, date=date, hour=hour)
     db.session.add(new_cita)
     db.session.commit()
+    es.index(index='citas_index', id=new_cita.cita_id,
+             body={'comment': comments, 'id': new_cita.cita_id})
+
+
+def search_houses(query):
+    result = es.search(index="houses_index",
+                       body={"query": {
+                           "match": {
+                               "comment": query,
+                           }}
+                       })
+    x = 0
+    houses = []
+    for doc in result['hits']['hits']:
+        if x == 5:
+            break
+        x += 1
+        id = doc['_source']['id']
+        data = Houses.query.filter_by(house_id=id).all()
+        try:
+            houses.append(data[0])
+        except:
+            print("index change to db")
+            pass
+    return houses
+
+
+def search_cita(query):
+    result = es.search(index="citas_index",
+                       body={"query": {
+                           "match": {
+                               "comment": query,
+                           }}
+                       })
+    x = 0
+    citas = []
+    for doc in result['hits']['hits']:
+        if x == 5:
+            break
+        x += 1
+        id = doc['_source']['id']
+        data = Citas.query.filter_by(cita_id=id).all()
+        try:
+            citas.append(data[0])
+        except:
+            print("index change to db")
+            pass
+    return citas
+    # data = Photos.query.filter_by(house_id=house_id).offset(int(num_image) - 1).limit(1).all()
 # def create():
 #     db = sq.connect("site_db")
 #     cursor = db.cursor()

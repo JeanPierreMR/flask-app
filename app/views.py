@@ -1,12 +1,16 @@
 from flask import Flask, render_template, url_for, request, session, redirect, render_template_string, send_file, \
     send_from_directory, make_response
+# from flask import flask_profiler
 from app import db_manager
 from app import app
 from app.db_manager import insert_house
 from app.db_manager import insert_cita
-from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm, CitaForm
+from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm, CompraFormFinal, CitaForm
 from io import BytesIO
-
+# from pymemcache.client.base import Client
+# import asyncio
+#
+# client = Client('localhost')
 # -- calling the create function each time
 db_manager.db.drop_all()
 db_manager.db.create_all()
@@ -32,6 +36,7 @@ def home():
         roomsbath = request.form['roomsbath']
 
         houses_info = db_manager.get_houses(zone, typehome, roomsnumber, roomsbath, page)
+        print(houses_info)
         resp = make_response(
             render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form))
         resp.set_cookie('zone', zone)
@@ -40,12 +45,29 @@ def home():
         resp.set_cookie('roomsbath', roomsbath)
         return resp
     else:
-        # page = request.args.get('page', 1, type=int)
+
         page = request.args.get('page', 1, type=int)
         zone = request.cookies.get('zone', default=9)
         typehome = request.cookies.get('typehome', default='Casa')
         roomsnumber = request.cookies.get('roomsnumber', default=1)
         roomsbath = request.cookies.get('roomsbath', default=1)
+
+        # if(page == 1 and zone == "9" and typehome=='Casa' and roomsnumber=="1" and roomsbath=="1"):
+        #     houses_info = client.get('house_info19casa11')
+        #     if (houses_info == b'[]' or houses_info =="nothing"):
+        #         houses_info = db_manager.get_houses(int(zone), typehome, int(roomsnumber), int(roomsbath), page)
+        #         client.set('house_info19casa11', houses_info)
+        #         print("no cache")
+        #     else:
+        #         async_errase()
+        #         print(houses_info)
+        #         print("cache")
+        #
+        # else:
+        #     houses_info = db_manager.get_houses(int(zone), typehome, int(roomsnumber), int(roomsbath), page)
+        #     client.set('house_info19casa11', houses_info)
+        #     print("no default")
+
         houses_info = db_manager.get_houses(int(zone), typehome, int(roomsnumber), int(roomsbath), page)
         resp = make_response(
             render_template("ui-avatars.html", pagination_page=page, houses_info=houses_info, compra_form=compra_form))
@@ -54,6 +76,11 @@ def home():
         resp.set_cookie('roomsnumber', str(roomsnumber))
         resp.set_cookie('roomsbath', str(roomsbath))
         return resp
+
+# async def async_errase():
+#     await asyncio.sleep(1)
+#     client.set('house_info19casa11', "nothing")
+#     print("erreasing")
 
 
 # -- Form ventas page
@@ -108,9 +135,6 @@ def img_house():
     except Exception as e:
         # print('sending blank')
         return send_from_directory(directory='static/img', filename='img.png', as_attachment=True)
-
-
-
 
 
 # -------- User control -------#
@@ -201,49 +225,140 @@ def full_output():
                             houses_info=houses_info, compra_form=compra_form))
         return resp
 
-@app.route("/db_test")
-def db_test():
-    db_manager.insert_user('gola','hola',b'hola')
-    pola = []
-    for x in db_manager.Users.query.all():
-        pola.append(type(x))
-        print(x)
-    print(pola)
-    for x in pola:
-        print(f'x: [{x}]')
-    return (str(pola))
+
+# @app.route("/buscar_cita")
+# def buscar_cita():
+#     compra_form = CompraForm(request.form)
+#     # Session control
+#     if not session.get('logged_in'):
+#         return redirect("/login")
+#     elif request.method == 'POST':
+#         query = request.form['busqueda']
+#
+#         houses_info = db_manager.search_houses(query)
+#         resp = make_response(
+#             render_template("index_cite_search.html", houses_info=houses_info, compra_form=compra_form))
+#         return resp
+#     else:
+#         return redirect("/")
 
 
-  #CREATE APPOINTMENT
+@app.route("/buscar_casa", methods=["POST", "GET"])
+def buscar_casa():
+    compra_form = CompraForm(request.form)
+    # Session control
+    if not session.get('logged_in'):
+        return redirect("/login")
+    elif request.method == 'POST':
+        query = request.form['busqueda']
+
+        houses_info = db_manager.search_houses(query)
+        resp = make_response(
+            render_template("index_search.html", houses_info=houses_info, compra_form=compra_form))
+        return resp
+    else:
+        return redirect("/")
+
+
+# CREATE APPOINTMENT
 @app.route("/form_cita", methods=["POST", "GET"])
 def form_cita1():
+    compra_form = CompraForm(request.form)
     cita_form = CitaForm(request.form)
     print(session.get('logged_in'))
     if not session.get('logged_in'):
         return redirect('/register')
     elif request.method == 'POST':
         print(dict(request.form))
-        name3 = request.form['name1']
-        name4 = request.form['name2']
-        lastname3 = request.form['lastname1']
-        lastname4 = request.form['lastname2']
-        dpi1 = request.form['dpi']
-        email2 = request.form['email1']
-        phone1 = request.form['phone']
+        name3 = request.form['name3']
+        name4 = request.form['name4']
+        lastname3 = request.form['lastname3']
+        lastname4 = request.form['lastname4']
+        dpi1 = request.form['dpi1']
+        email2 = request.form['email2']
+        phone1 = request.form['phone1']
         date = request.form['date']
         hour = request.form['hour']
+        comments = request.form['commentarios']
         user_id = session['user_id']
-        insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour)
+        insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour, comments)
         return render_template('form_cita.html',
                                msg='Su cita fue agendada',
                                success=True,
-                               form=cita_form)
+                               form=cita_form,
+                               compra_form=compra_form)
     # elif not session.get('logged_in'):
     #     return redirect('/register')
     else:
-        return render_template("form_cita.html", form=cita_form)
+        return render_template("form_cita.html", form=cita_form, compra_form=compra_form)
+
+
+# COMPRA FINAL
+@app.route("/compra", methods=["POST", "GET"])
+def compra():
+    compra_form = CompraForm(request.form)
+    print(session.get('logged_in'))
+    if not session.get('logged_in'):
+        return redirect('/register')
+    elif request.method == 'POST':
+        print(dict(request.form))
+        id_casa_comprada = request.form["id_casa_comprada"]
+        print(session['user_id'])
+        db_manager.remove_house(id_casa_comprada)
+        return "compra éxitosa"
+    else:
+        return redirect("/")
 
 
 if __name__ == "__main__":
     # -- run the app in debug mode
     app.run(debug=True)
+
+# CREATE PROFILER
+# app = Flask(__name__)
+# app.config["DEBUG"] = True
+
+# app.config["flask_profiler"] = {
+#   "enabled": app.config["DEBUG"],
+#  "storage": {
+#     "engine": "sqlite"
+# },
+#   "basicAuth": {
+#      "enabled":True,
+#     "username": "admin",
+#    "password":"admin"
+#  },
+# "ignore": [
+#    "^/static/.*"
+# ]
+# }
+
+# @app.route('/house/<id>', methods=['GET'])
+# def getHouse(id):
+#   return "Id de casa es:" + str(id)
+
+# @app.route('/house/<id>', methods=['PUT'])
+# def updateHouse(id):
+#   return "Casa {} está siendo actualizada".format(id)
+
+# @app.route('/house', methods=['GET'])
+# def listHouses():
+#   return "Suponga que se envia la lista de casas..."
+
+# @app.route('/static/something/', methods=['GET'])
+# def staticSomething():
+#   return "Esto no debería ser tomado en cuenta ..."
+
+# flask_profiler.init_app(app)
+
+# @app.route('/doSomething', methods=['GET'])
+# def doSomething():
+#   return "flask-profiler no medirá esto."
+
+# @app.route('/doSomethingImportant', methods=['GET'])
+# @flask_profiler.profile()
+# def doSomethingImportant():
+#   return "flask-profiler will measure this request."
+
+# if __name__ == '__main__':
+#   app.run(host="127.0.0.1", port=5000)

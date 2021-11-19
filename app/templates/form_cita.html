@@ -14,180 +14,168 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Llenar los datos para coordinar cita</div>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6 col-lg-4">
-									<!---Datos personales-->
-									<label class="mb-3"><b>Datos personales</b></label>
-									<div class="form-group form-group-default">
-										<label>Nombre</label>
-										<input id="Name" type="text" class="form-control" placeholder="Primer nombre">
-										{{ form.name3(placeholder="Primer nombre", class="form-control") }}
-									</div>
-									<div class="form-group form-group-default">
-										<input id="Name" type="text" class="form-control" placeholder="Segundo nombre">
-										{{ form.name4(placeholder="Segundo nombre", class="form-control") }}
-									</div>
-									<div class="form-group form-group-default">
-										<label>Apellidos</label>
-										<input id="Name" type="text" class="form-control" placeholder="Primer apellido">
-										{{ form.lastname3(placeholder="Primer apellido", class="form-control") }}
-									</div>
-									<div class="form-group form-group-default">
-										<input id="Name" type="text" class="form-control" placeholder="Segundo apellido">
-										{{ form.lastname4(placeholder="Segundo apellido", class="form-control") }}
-									</div>
-									<div class="form-group form-inline">
-										<label for="inlineinput" class="col-md-3 col-form-label">DPI</label>
-										<div class="col-md-9 p-0">
-											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese DPI">
-											{{ form.dpi1(placeholder="DPI", class="form-control") }}
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="email2">Correo electrónico</label>
-										<input type="email" class="form-control" id="email2" placeholder="Ingrese correo">
-										{{ form.email2(placeholder="Correo electronico", class="form-control") }}
-										<small id="emailHelp2" class="form-text text-muted">Nunca compartiremos su correo electrónico ingresado.</small>
-									</div>
-									<div class="form-group form-inline">
-										<label for="inlineinput" class="col-md-3 col-form-label">Teléfono</label>
-										<div class="col-md-9 p-0">
-											<input type="text" class="form-control input-full" id="inlineinput" placeholder="Ingrese número">
-											{{ form.phone1(placeholder="Telefono", class="form-control") }}
-										</div>
-									</div>
-									<!---end datos personales-->
+                    <form action="/form_cita" method="post">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Llenar los datos para coordinar cita</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <!---Datos personales-->
+                                        <label class="mb-3"><b>Datos personales</b></label>
+                                        <div class="form-group form-group-default">
+                                            <label>Nombre</label>
+                                            {{ form.name3(placeholder="Primer nombre", class="form-control") }}
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            {{ form.name4(placeholder="Segundo nombre", class="form-control") }}
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Apellidos</label>
+                                            {{ form.lastname3(placeholder="Primer apellido", class="form-control") }}
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            {{ form.lastname4(placeholder="Segundo apellido", class="form-control") }}
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label for="inlineinput" class="col-md-3 col-form-label">DPI</label>
+                                            <div class="col-md-9 p-0">
+                                                {{ form.dpi1(placeholder="DPI", class="form-control") }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2">Correo electrónico</label>
+                                            {{ form.email2(placeholder="Correo electronico", class="form-control") }}
+                                            <small id="emailHelp2" class="form-text text-muted">Nunca compartiremos su correo electrónico ingresado.</small>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label for="inlineinput" class="col-md-3 col-form-label">Teléfono</label>
+                                            <div class="col-md-9 p-0">
+                                                {{ form.phone1(placeholder="Telefono", class="form-control") }}
+                                            </div>
+                                        </div>
+                                        <!---end datos personales-->
+
+                                        <div class="form-group form-group-default">
+                                            <label>Comentarios</label>
+                                            {{ form.commentarios(placeholder="Comentarios", class="form-control") }}
+                                        </div>
 
 
+                                        <!---Not sure if is going to be used
+                                        <div class="form-group has-success">
+                                            <label for="successInput">Success Input</label>
+                                            <input type="text" id="successInput" value="Success" class="form-control">
+                                        </div>
+                                        <div class="form-group has-error has-feedback">
+                                            <label for="errorInput">Error Input</label>
+                                            <input type="text" id="errorInput" value="Error" class="form-control">
+                                            <small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="disableinput">Disable Input</label>
+                                            <input type="text" class="form-control" id="disableinput" placeholder="Enter Input" disabled>
+                                        </div>-->
 
-									<!---Not sure if is going to be used
-									<div class="form-group has-success">
-										<label for="successInput">Success Input</label>
-										<input type="text" id="successInput" value="Success" class="form-control">
-									</div>
-									<div class="form-group has-error has-feedback">
-										<label for="errorInput">Error Input</label>
-										<input type="text" id="errorInput" value="Error" class="form-control">
-										<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>
-									</div>
-									<div class="form-group">
-										<label for="disableinput">Disable Input</label>
-										<input type="text" class="form-control" id="disableinput" placeholder="Enter Input" disabled>
-									</div>-->
-									
-									
-								</div>
-								<div class="col-md-6 col-lg-4">		
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">Calendario</label>
-										<select class="form-control" id="exampleFormControlSelect1">
-											<option>10 de noviembre</option>
-											<option>11 de noviembre</option>
-											<option>12 de noviembre</option>
-										</select>
-										{{ form.date(class="form-control") }}
-									</div>	
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">Horario</label>
-										<select class="form-control" id="exampleFormControlSelect1">
-											<option>1</option>
-											<option>3</option>
-											<option>4</option>
-										</select>
-										{{ form.hour(class="form-control") }}
-									</div>	
-									
-									<div class="form-group">
-										<div class="form-check">
-											<label class="form-check-label">
-												<input class="form-check-input" type="checkbox" value="">
-												<span class="form-check-sign">Confirmo que agendo cita de propiedad de mi interés</span>
-											</label>
-										</div>
-									</div>
-									<!---not sure if will use it later 
-									<div class="form-group">
-										<div class="input-group">
-											<input type="text" class="form-control" aria-label="Text input with dropdown button">
-											<div class="input-group-append">
-												<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-												<div class="dropdown-menu">
-													<a class="dropdown-item" href="#">Action</a>
-													<a class="dropdown-item" href="#">Another action</a>
-													<a class="dropdown-item" href="#">Something else here</a>
-													<div role="separator" class="dropdown-divider"></div>
-													<a class="dropdown-item" href="#">Separated link</a>
-												</div>
-											</div>
-										</div>
-									</div> 
-									<div class="form-group">
-										<div class="input-icon">
-											<span class="input-icon-addon">
-												<i class="fa fa-user"></i>
-											</span>
-											<input type="text" class="form-control" placeholder="Username">
-										</div>
-									</div> -->
-									</div>
-								</div>
-								<div class="col-md-6 col-lg-4">
-									<!---Leaving in case of editing form or types of spaces to fill
-									<div class="form-group">
-										<label for="largeInput">Large Input</label>
-										<input type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
-									</div>
-									<div class="form-group">
-										<label for="largeInput">Default Input</label>
-										<input type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input">
-									</div>
-									<div class="form-group">
-										<label for="smallInput">Small Input</label>
-										<input type="text" class="form-control form-control-sm" id="smallInput" placeholder="Small Input">
-									</div>
-									<div class="form-group">
-										<label for="largeSelect">Large Select</label>
-										<select class="form-control form-control-lg" id="largeSelect">
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label for="defaultSelect">Default Select</label>
-										<select class="form-control form-control" id="defaultSelect">
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label for="smallSelect">Small Select</label>
-										<select class="form-control form-control-sm" id="smallSelect">
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-										</select>
-									</div>-->
-								</div>
-							</div>
-						</div>
-						<div class="card-action">
-							<button class="btn btn-success">Enviar</button>
-							<button class="btn btn-danger">Cancelar</button>
-						</div>
-					</div>
+
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Calendario</label>
+                                            {{ form.date(class="form-control") }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Horario</label>
+                                            {{ form.hour(class="form-control") }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <span class="form-check-sign">Confirmo que agendo cita de propiedad de mi interés</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!---not sure if will use it later
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#">Action</a>
+                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <div role="separator" class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Separated link</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                                <input type="text" class="form-control" placeholder="Username">
+                                            </div>
+                                        </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <!---Leaving in case of editing form or types of spaces to fill
+                                        <div class="form-group">
+                                            <label for="largeInput">Large Input</label>
+                                            <input type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="largeInput">Default Input</label>
+                                            <input type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="smallInput">Small Input</label>
+                                            <input type="text" class="form-control form-control-sm" id="smallInput" placeholder="Small Input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="largeSelect">Large Select</label>
+                                            <select class="form-control form-control-lg" id="largeSelect">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Default Select</label>
+                                            <select class="form-control form-control" id="defaultSelect">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="smallSelect">Small Select</label>
+                                            <select class="form-control form-control-sm" id="smallSelect">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action">
+                                {{ form.submit(class="btn btn-succes") }}
+                            </div>
+                        </div>
+                     </form>
 				</div>
 			</div>
 		</div>

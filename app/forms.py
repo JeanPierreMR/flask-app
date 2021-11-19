@@ -115,7 +115,10 @@ class CitaForm(FlaskForm):
     phone1 = IntegerField('telefono', id='telefono_create', validators=[DataRequired()])
     date = SelectField('Calendario', choices=[('10 de noviembre', '10 de noviembre'), ('11 de noviembre', '11 de noviembre'),('12 de noviembre','12 de noviembre')])
     hour = SelectField('Horario', choices=[('1', '1'), ('3', '3'), ('4', '4')])
+    commentarios = TextField('comentario', id='comentario_create', validators=[DataRequired()])
 
     submit = SubmitField("Enviar")
 
 
+class CompraFormFinal(FlaskForm):
+    submit =SubmitField("Comprar")
