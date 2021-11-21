@@ -50,7 +50,7 @@ def home():
     elif request.method == 'POST':
         # select (zone, typehome, roomsnumber, roomsbath, 5, page_number-1,)
 
-
+        
         page = request.args.get('page', 1, type=int)
         zone = request.form['zone']
         typehome = request.form['typehome']
@@ -328,35 +328,20 @@ def compra():
     else:
         return redirect("/")
 
-@app.route("/buscar_cita", methods=["POST", "GET"])
-def buscar_casa():
-    compra_form = CompraForm(request.form)
-    # Session control
-    if not session.get('logged_in'):
-        return redirect("/login")
-    elif request.method == 'POST':
-        query = request.form['busqueda']
 
-        citas_info = db_manager.search_cita(query)
-        resp = make_response(
-            render_template("index_cite_search.html", houses_info=citas_info, compra_form=compra_form)
-        )
-        return resp
-    else:
-        return redirect("/")
 
 
 #CREATE PROFILER
 
 #call profiler
 #profiler = Profiler()
-
+  
 #app = Flask(__name__)
 #app.config["DEBUG"] =True
 app.config["flask_profiler"] = {
     "enabled": app.config["DEBUG"],
     "storage": {
-        "engine": "sqlite"
+        "engine": "sqlite" 
     },
     "basicAuth":{
         "enabled": True,

@@ -6,10 +6,12 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'super secret key'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site_db'
 db = SQLAlchemy(app)  # flask-sqlalchemy
+
 
 
 from app import views

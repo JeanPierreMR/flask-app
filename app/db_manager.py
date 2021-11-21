@@ -11,6 +11,7 @@ from elasticsearch import Elasticsearch
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 es.indices.delete(index='houses_index', ignore=[400, 404])
 es.indices.delete(index='citas_index', ignore=[400, 404])
+
 class Users(db.Model):
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True)
@@ -306,7 +307,7 @@ def search_cita(query):
         try:
             citas.append(data[0])
         except:
-            print("index change to db")
+            print("index change to dbcitas")
             pass
     return citas
     # data = Photos.query.filter_by(house_id=house_id).offset(int(num_image) - 1).limit(1).all()

@@ -17,52 +17,28 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tus opciones</h4>
+                                <h4 class="card-title">Tus citas</h4>
 
                             </div>
                             {% for house_info in houses_info %}
                                 <div class="card-body">
                                     <p class="demo">
-                                        {% for n_image in range(1,6) %}
-                                            <div class="avatar avatar-xxl">
-{#                                                {% houseid = str(house_info[17]) %}#}
-
-                                                <img src={{ url_for('img_house', num_image=n_image, house_id=house_info.house_id ) }} alt="..." class="avatar-img rounded">
-                                            </div>
-                                        {% endfor %}
-
+{#                                        LEFT#}
                                     </p>
                                 </div>
                                 <!---Trying something new-->
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title">Información</h4>
+                                            <h4 class="card-title">Cita</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-5 col-md-4">
-                                                    <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
-                                                        <!---<a  target="_blank" href="/form_cita.html" class="btn btn-secondary" id="v-pills-home-tab-nobd" data-toggle="pill" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true">Hacer Cita</a>--->
-                                                        <a target="_blank"
-                                                           href="/form_cita"
-                                                           class="btn btn-secondary">
-                                                            Hacer Cita</a>
-                                                    </div>
-                                                </div>
                                                 <div class="col-7 col-md-8">
                                                     <div class="tab-content" id="v-pills-without-border-tabContent">
                                                         <div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
                                                             <p>Tipo: {{ house_info.tipo }}</p>
                                                             <p>Zona: {{ house_info.zona }}</p>
-                                                            <p>Habitaciones: {{ house_info.n_habitaciones }}</p>
-                                                            <p>Direccion: {{ house_info.direccion }}</p>
-                                                            <p>Baños:   {{ house_info.n_lavados }}</p>
-                                                            <p>Precio Q.{{ house_info.precio_quetzales }}</p>
-                                                            <p>Precio Dolares: {{ house_info.precio_dolares }}</p>
-                                                            <p>Metros cuadrados Q.{{ house_info.metros_cuadrados }}</p>
-                                                            <p>Comentarios: {{ house_info.comentarios_adicionales }}</p>
-
                                                         </div>
                                                     </div>
                                                 </div>

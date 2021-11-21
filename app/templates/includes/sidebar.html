@@ -112,7 +112,36 @@
 
 
 
-						<!---venta -->
+						<!---Buscar cita -->
+						<li class="nav-item {% if 'form' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#forms">
+								<i class="fas flaticon-file-1"></i>
+								<p>Venta</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="forms">
+								<ul class="nav nav-collapse">
+									<li>
+                                        <form method="post" action="/buscar_cita">
+                                            <li>
+                                                    <span class="sub">Buscar cita </span>
+                                            </li>
+                                            <li>
+                                                <span class="sub-item"></span>
+                                                <input type="text" class="form-control" name="busqueda">
+                                            </li>
+
+                                            <li class="mx-4 mt-2">
+                                                <input type="submit" class="btn btn-succes">
+                                            </li>
+                                        </form>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<!---end Buscar cita-->
+{##}
+                        <!---venta -->
 						<li class="nav-item {% if 'form' in segment %} active {% endif %}">
 							<a data-toggle="collapse" href="#forms">
 								<i class="fas flaticon-file-1"></i>
@@ -129,8 +158,7 @@
 								</ul>
 							</div>
 						</li>
-						<!---end venta-->
-{##}
+                        <!---end venta-->
 {#						<!--renta -->#}
 {#						<li class="nav-item {% if 'layout' in segment %} active {% endif %}">#}
 {#							<a data-toggle="collapse" href="#sidebarLayouts">#}
