@@ -1,0 +1,50 @@
+- pipeline.id: Kafka-process
+  queue.type: persisted
+  config.string: |
+    input {
+        kafka{
+        bootstrap_servers => "localhost:9092"
+        topics => ["topic_es"]
+      }
+    }
+    output {
+      pipeline { send_to => ["ES", "DB"] }
+
+    }
+- pipeline.id: ES-process
+  queue.type: persisted
+  config.string: |
+    input { pipeline { address => "ES" } }
+    filter {
+            json {
+            source => "message"
+            }
+            mutate {
+            remove_field => ["message"]
+            }
+        }
+    output {
+      elasticsearch {
+              hosts => ["localhost:9200"]
+              index => "houses_index"
+      }
+    }
+- pipeline.id: DB-process
+  queue.type: persisted
+  config.string: |
+    input { pipeline { address => "DB" } }
+    filter {
+            json {
+            source => "message"
+            }
+            mutate {
+            remove_field => ["message"]
+            }
+        }
+    output {
+      jdbc {
+            driver_class => "com.mysql.jdbc.Driver"
+            connection_string => "jdbc:mysql://HOSTNAME/DATABASE?user=USER&password=PASSWORD"
+            statement => [ "INSERT INTO log (host, timestamp, message) VALUES(?, CAST(? AS timestamp), ?)", "host", "@timestamp", "message" ]
+      }
+    }

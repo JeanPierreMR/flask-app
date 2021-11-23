@@ -1,16 +1,25 @@
 import sqlite3 as sq
 import time
-
+from elasticsearch import Elasticsearch
 import sqlalchemy
+from kafka import KafkaConsumer, KafkaProducer
 
+from json import loads
+from json import dumps
 from app import db as db
 
-# connect to our cluster
-from elasticsearch import Elasticsearch
-
+# connect to our cluster Elastic Search
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 es.indices.delete(index='houses_index', ignore=[400, 404])
 es.indices.delete(index='citas_index', ignore=[400, 404])
+
+# KAFKA Conections
+Kafka_server = "localhost:9092"
+producer = KafkaProducer(
+    bootstrap_servers=['localhost:9092'],
+    value_serializer=lambda x: dumps(x).encode('utf-8')
+)
+
 
 class Users(db.Model):
     __tablename__ = "users"
@@ -63,15 +72,6 @@ class Citas(db.Model):
     date = db.Column(db.String(200))
     hour = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-
-
-# Insert user to db
-def insert_user(username, email, password):
-    new_user = Users(username=username, email=email, password=password)
-    db.session.add(new_user)
-    db.session.commit()
-
-    # basic data check, registered or not
 
 
 def check_data(email):
@@ -152,29 +152,6 @@ def check_login_data(username, password):
     #         return True
 
 
-# db.session.delete(modebject)
-#     model.query.all()
-#     students.query.filter_by(city= ’Tokyo’).all()
-# insert house
-def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber,
-                 roomsbath, pricedol, pricequet, meters, comments, images):
-    new_house = Houses(primer_nombre=name1, segundo_nombre=name2,
-                       primer_apellido=lastname1, segundo_apellido=lastname2,
-                       DPI=dpi, correo_electronico=email1, telefono=phone,
-                       direccion=address, tipo=typehome, zona=zone, n_habitaciones=roomsnumber,
-                       n_lavados=roomsbath, precio_dolares=pricedol, precio_quetzales=pricequet,
-                       metros_cuadrados=meters, comentarios_adicionales=comments, user_id=user_id)
-    db.session.add(new_house)
-    db.session.commit()
-    es.index(index='houses_index', id=new_house.house_id,
-             body={'comment': comments, 'id': new_house.house_id})
-
-    for image in images:
-        new_image = Photos(photos=image.read(), house_id=new_house.house_id)
-        db.session.add(new_image)
-        db.session.commit()
-
-
 def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
     data = Houses.query.filter_by(
         zona=zone, tipo=typehome, n_habitaciones=roomsnumber, n_lavados=roomsbath
@@ -203,12 +180,6 @@ def get_houses(zone, typehome, roomsnumber, roomsbath, page_number):
                    (zone, typehome, roomsnumber, roomsbath, 5, (page_number - 1) * 5,))
     data = cursor.fetchall()
     return data
-
-
-def remove_house(id):
-    es.delete(index="houses_index", id=id)
-    data = Houses.query.filter_by(house_id=id).delete()
-
 
 
 def get_all_houses(page_number):
@@ -257,15 +228,6 @@ def get_house_images(house_id, num_image):
     return data[0]
 
 
-def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour, comments):
-    new_cita = Citas(user_id=user_id, name3=name3, name4=name4, lastname3=lastname3, lastname4=lastname4, dpi1=dpi1,
-                     email2=email2, phone1=phone1, date=date, hour=hour)
-    db.session.add(new_cita)
-    db.session.commit()
-    es.index(index='citas_index', id=new_cita.cita_id,
-             body={'comment': comments, 'id': new_cita.cita_id})
-
-
 def search_houses(query):
     result = es.search(index="houses_index",
                        body={"query": {
@@ -310,53 +272,103 @@ def search_cita(query):
             print("index change to dbcitas")
             pass
     return citas
-    # data = Photos.query.filter_by(house_id=house_id).offset(int(num_image) - 1).limit(1).all()
-# def create():
-#     db = sq.connect("site_db")
-#     cursor = db.cursor()
-#     print("creating database connection file!")
-#     time.sleep(1)
-#     # creating users table
-#     cursor.execute("""
-#         CREATE TABLE IF NOT EXISTS
-#         users(
-#             user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-#             username TEXT,
-#             email TEXT,
-#             password BLOB)
-#         """)
-#     # creating houses table
-#     cursor.execute("""
-#             CREATE TABLE IF NOT EXISTS
-#             houses(
-#                 house_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-#                 primer_nombre TEXT,
-#                 segundo_nombre TEXT,
-#                 primer_apellido TEXT,
-#                 segundo_apellido TEXT,
-#                 DPI INTEGER,
-#                 correo_electronico TEXT,
-#                 telefono NUMERIC,
-#                 direccion TEXT,
-#                 tipo TEXT,
-#                 zona NUMERIC,
-#                 n_habitaciones NUMERIC,
-#                 n_lavados NUMERIC,
-#                 precio_dolares FLOAT,
-#                 precio_quetzales FLOAT,
-#                 metros_cuadrados FLOAT,
-#                 comentarios_adicionales TEXT,
-#                 user_id INTEGER,
-#                 FOREIGN KEY (user_id) REFERENCES user (user_id))
-#             """)
-#     # create photos table
-#     cursor.execute("""
-#                 CREATE TABLE IF NOT EXISTS
-#                 photos(
-#                     photos_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-#                     photos BLOB NOT NULL,
-#                     house_id INTEGER,
-#                     FOREIGN KEY (house_id) REFERENCES houses (house_id))
-#                 """)
-#
-#     db.commit()
+
+
+# ------------------------INSERTS------------------------
+# producer.send('topic_mysql', value=data)
+# producer.send('topic_es', value=data)
+def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour, comments):
+    # data_dict = {
+    #     'op': 'insert_cita',
+    #     'user_id': user_id,
+    #     'name3': name3,
+    #     'name4': name4,
+    #     'lastname3': lastname3,
+    #     'lastname4': lastname4,
+    #     'dpi1': dpi1,
+    #     'email2': email2,
+    #     'phone1': phone1,
+    #     'date': date,
+    #     'hour': hour,
+    #     'comments': comments
+    # }
+    # producer.send('topic_mysql', value=data_dict)
+    new_cita = Citas(user_id=user_id, name3=name3, name4=name4, lastname3=lastname3, lastname4=lastname4, dpi1=dpi1,
+                     email2=email2, phone1=phone1, date=date, hour=hour)
+    db.session.add(new_cita)
+    db.session.commit()
+
+    data = {'comment': comments, 'id': new_cita.cita_id}
+    producer.send('topic_es', value=data)
+    # es.index(index='citas_index', id=new_cita.cita_id,
+    #          body={'comment': comments, 'id': new_cita.cita_id})
+
+
+# Insert user to db
+def insert_user(username, email, password):
+    # data_dict = {
+    #     'op': 'insert_user',
+    #     'username': username,
+    #     'email': email,
+    #     'password': password
+    # }
+    # producer.send('topic_mysql', value=data_dict)
+    new_user = Users(username=username, email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+
+def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber,
+                 roomsbath, pricedol, pricequet, meters, comments, images):
+    # data_dict = {
+    #     'op': 'insert_house',
+    #     'user_id': user_id,
+    #     'name1': name1,
+    #     'name2': name2,
+    #     'lastname1': lastname1,
+    #     'lastname2': lastname2,
+    #     'dpi': dpi,
+    #     'email1': email1,
+    #     'phone': phone,
+    #     'address': address,
+    #     'typehome': typehome,
+    #     'zone': zone,
+    #     'roomsnumber': roomsnumber,
+    #     'roomsbath': roomsbath,
+    #     'pricedol': pricedol,
+    #     'pricequet': pricequet,
+    #     'meters': meters,
+    #     'comments': comments,
+    #     'images': images
+    # }
+    # producer.send('topic_mysql', value=data_dict)
+    new_house = Houses(primer_nombre=name1, segundo_nombre=name2,
+                       primer_apellido=lastname1, segundo_apellido=lastname2,
+                       DPI=dpi, correo_electronico=email1, telefono=phone,
+                       direccion=address, tipo=typehome, zona=zone, n_habitaciones=roomsnumber,
+                       n_lavados=roomsbath, precio_dolares=pricedol, precio_quetzales=pricequet,
+                       metros_cuadrados=meters, comentarios_adicionales=comments, user_id=user_id)
+    db.session.add(new_house)
+    db.session.commit()
+
+    data = {'comment': comments, 'id': new_house.house_id}
+    producer.send('topic_es', value=data)
+    es.index(index='houses_index', id=new_house.house_id,
+             body={'comment': comments, 'id': new_house.house_id})
+
+
+    for image in images:
+        new_image = Photos(photos=image.read(), house_id=new_house.house_id)
+        db.session.add(new_image)
+        db.session.commit()
+
+
+# delete
+def remove_house(id):
+    # data_dict = {
+    #     'op': 'remove_house',
+    #     'id': id
+    # }
+    # producer.send('topic_mysql', value=data_dict)
+    es.delete(index="houses_index", id=id)
+    data = Houses.query.filter_by(house_id=id).delete()

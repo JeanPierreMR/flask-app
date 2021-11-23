@@ -8,11 +8,6 @@ from app.db_manager import insert_house
 from app.db_manager import insert_cita
 from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm, CompraFormFinal, CitaForm
 from io import BytesIO
-# from pymemcache.client.base import Client
-# import asyncio
-#
-# client = Client('localhost')
-# -- calling the create function each time
 #from flask_profiler import Profiler
 import flask_profiler
 #import memcache
@@ -23,16 +18,6 @@ from functools import lru_cache
 db_manager.db.drop_all()
 db_manager.db.create_all()
 
-#CACHE
-#client = memcache.Client(['127.0.0.1',11211])
-#cacheLong = 60
-
-#global cache
-#cache = True
-
-#def usercache(user_id):
- #   if cache ==True:
-  #      client.set("current_user", user_id, time=cacheLong)
 
 
 # -- mapping for home page(root)
@@ -97,7 +82,7 @@ def home():
         resp.set_cookie('roomsnumber', str(roomsnumber))
         resp.set_cookie('roomsbath', str(roomsbath))
         return resp
-print(home.cache_info)
+
 
 # -- Form ventas page
 @app.route("/form-venta", methods=["POST", "GET"])
@@ -279,7 +264,7 @@ def buscar_casa():
         return redirect("/")
 
 
-# CREATE APPOINTMENT
+#CREATE APPOINTMENT
 @app.route("/form_cita", methods=["POST", "GET"])
 def form_cita1():
     compra_form = CompraForm(request.form)
@@ -329,7 +314,7 @@ def compra():
         return redirect("/")
 
 @app.route("/buscar_cita", methods=["POST", "GET"])
-def buscar_casa():
+def buscar_cita():
     compra_form = CompraForm(request.form)
     # Session control
     if not session.get('logged_in'):
@@ -345,7 +330,22 @@ def buscar_casa():
     else:
         return redirect("/")
 
+@app.route("/buscar_cita", methods=["POST", "GET"])
+def test_es():
+    compra_form = CompraForm(request.form)
+    # Session control
+    if not session.get('logged_in'):
+        return redirect("/login")
+    elif request.method == 'POST':
+        query = request.form['busqueda']
 
+        citas_info = db_manager.search_cita(query)
+        resp = make_response(
+            render_template("index_cite_search.html", houses_info=citas_info, compra_form=compra_form)
+        )
+        return resp
+    else:
+        return redirect("/")
 #CREATE PROFILER
 
 #call profiler
