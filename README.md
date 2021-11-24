@@ -12,7 +12,7 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 -   [Autores](#Autores)
 
 
-### UML 
+## UML 
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/UML/vender.jpeg)
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/UML/comprar.jpeg)
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/UML/compra_confirmada.jpeg)
@@ -77,7 +77,7 @@ Se utilizó Werkzeug profiler que muestra resultados en terminal.
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/terminal.JPG)
 
 Para poder visualizarlo utilizamos snakeviz que muestra gráficas y tablas. 
-![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/terminal.JPG)
+![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/snakeviz_visual_profiler.jpeg)
 
 
 
