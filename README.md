@@ -2,18 +2,13 @@
 Guate-hogar es una aplicación que busca facilitar la venta/renta de viviendas dentro de Guatemala. 
 Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital. 
 
-# Integrantes
-- Jean Pierre Mejicanos
-- Adriana Mundo
-- Pablo Velasquez
-
-## Contenido
+# Contenido
 -   [UML](#UML)
 -   [Requisitos](#Requisitos)
 -   [Ejecución](#Ejecución)
 -   [Acceso](#Acceso)
 -   [Profiler](#Profiler)
--   [Prueba de carga](#Pruebas de carga)
+-   [Prueba de carga](#Pruebas)
 -   [Autores](#Autores)
 
 
