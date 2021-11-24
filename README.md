@@ -54,6 +54,8 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 
 
 ## Ejecución
+(Aquí se encuentran los comandos que se deben correr en terminal, ya que los requerimientos proveen una instalación automática de todas las extensiones necesarias para correr el programa de manera correcta).
+
 -   venv
     venv\Scripts\activate
 
@@ -75,6 +77,7 @@ se puede acceder a la app a través de las siguientes 2 opciones:
 
 ## Kibana 
 Kibana es una aplicación frontend que se encuentra sobre el Elastick Stack y proporciona capacidades de visualización.
+
 Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontrar en el folder ['Kibana'](https://github.com/JeanPierreMR/flask-app/tree/master/Pictures/Kibana).
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Kibana/all_graphics.jpeg)
 
