@@ -77,6 +77,7 @@ Se utilizó Werkzeug profiler que muestra resultados en terminal.
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/terminal.JPG)
 
 Para poder visualizarlo utilizamos snakeviz que muestra gráficas y tablas. 
+
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/snakeviz_visual_profiler.jpeg)
 
 
