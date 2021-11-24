@@ -18,7 +18,7 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/UML/compra_confirmada.jpeg)
 
 
-### Requisitos
+## Requisitos
 
  -  pipenv, python3
 
@@ -42,6 +42,8 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 
 -  Logstash 
    docker-compose -f app/mysql-docker-compose.yml up -d
+   
+   ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Docker/elastic%2C%20kafka%2C%20zookeeper.JPG)
 
 -  JBDC
    logstash-plugin install jbdc
@@ -50,7 +52,7 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
    pip install snakeviz
 
 
-### Ejecución
+## Ejecución
 -   venv
     venv\Scripts\activate
 
@@ -64,14 +66,14 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
     snakeviz <profile_file_name>
 
 
-### Acceso
+## Acceso
 
 se puede acceder a la app a través de las siguientes 2 opciones: 
 -   http://localhost:5000/
 -   http://127.0.0.1:5000/
 
 
-### Profiler
+## Profiler
 Se utilizó Werkzeug profiler que muestra resultados en terminal. 
 
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/terminal.JPG)
@@ -82,7 +84,7 @@ Para poder visualizarlo utilizamos snakeviz que muestra gráficas y tablas.
 
 
 
-### Pruebas de carga
+## Pruebas de carga
 Con JMeter realizamos el testing de pruebas de carga.
 Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontrar en el folder 'JMeter'. 
 -   Con Cache
@@ -92,7 +94,7 @@ Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontr
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/JMeter/Sin%20cache/muchos_usuarios_sin_cache.jpeg)
 
 
-### Autores
+## Autores
 -   Jean Pierre Mejicanos
 -   Adriana Mundo
 -   Pablo Velasquez 
