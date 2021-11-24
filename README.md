@@ -72,12 +72,13 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 ### Acceso
 
 se puede acceder a la app a través de las siguientes 2 opciones: 
--   http://localhost: 5000/
+-   http://localhost:5000/
 -   http://127.0.0.1:5000/
 
 
 ### Profiler
 Se utilizó Werkzeug profiler que muestra resultados en terminal. 
+
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Profiler/terminal.JPG)
 
 Para poder visualizarlo utilizamos snakeviz que muestra gráficas y tablas. 
