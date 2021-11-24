@@ -7,6 +7,7 @@ Actualmente se encuentra delimitado a zonas céntricas de la ciudad capital.
 -   [Requisitos](#Requisitos)
 -   [Ejecución](#Ejecución)
 -   [Acceso](#Acceso)
+-   [Kibana](#Kibana)
 -   [Profiler](#Profiler)
 -   [Prueba de carga](#Pruebas)
 -   [Autores](#Autores)
@@ -72,6 +73,11 @@ se puede acceder a la app a través de las siguientes 2 opciones:
 -   http://localhost:5000/
 -   http://127.0.0.1:5000/
 
+## Kibana 
+Kibana es una aplicación frontend que se encuentra sobre el Elastick Stack y proporciona capacidades de visualización.
+Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontrar en el folder ['Kibana'](https://github.com/JeanPierreMR/flask-app/tree/master/Pictures/Kibana).
+![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/Pictures/Kibana/all_graphics.jpeg)
+
 
 ## Profiler
 Se utilizó Werkzeug profiler que muestra resultados en terminal. 
@@ -86,7 +92,7 @@ Para poder visualizarlo utilizamos snakeviz que muestra gráficas y tablas.
 
 ## Pruebas de carga
 Con JMeter realizamos el testing de pruebas de carga.
-Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontrar en el folder 'JMeter'. 
+Aquí se muestran algunas imágenes, sin embargo más de estas se pueden encontrar en el folder ['JMeter'](https://github.com/JeanPierreMR/flask-app/tree/master/JMeter). 
 -   Con Cache
 ![Image text](https://github.com/JeanPierreMR/flask-app/blob/master/JMeter/Cache/muchos_usuarios_con_cache.jpeg)
 
