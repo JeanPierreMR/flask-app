@@ -10,15 +10,16 @@ from app.forms import LoginForm, CreateAccountForm, VentaForm, CompraForm, Compr
 from io import BytesIO
 #from flask_profiler import Profiler
 import flask_profiler
-#import memcache
-from functools import lru_cache
+import memcache
 
 
 # -- calling the create function each time
 db_manager.db.drop_all()
 db_manager.db.create_all()
 
-
+# mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+# # print("Connection successful")
+# mctime = 5
 
 # -- mapping for home page(root)
 # -- using decorator function
@@ -26,7 +27,6 @@ db_manager.db.create_all()
 @app.route("/index.html", methods=["POST", "GET"])
 @app.route("/home", methods=["POST", "GET"])
 @app.route("/forms", methods=["POST", "GET"])
-@lru_cache(maxsize=10)
 def home():
     compra_form = CompraForm(request.form)
     # Session control
@@ -83,6 +83,13 @@ def home():
         resp.set_cookie('roomsbath', str(roomsbath))
         return resp
 
+# def cache_houses():
+#     nombre = str(zone = request.form['zone'])+ str(typehome = request.form['typehome'])+ str(roomsnumber = request.form['roomsnumber'])+ str(roomsbath = request.form['roomsbath'])+str(page = request.args.get('page', 1, type=int))
+#     if mc.get("nombre") != None:
+#         houses_info = db_manager.get_houses(str(zone = request.form['zone']), str(typehome = request.form['typehome']), str(roomsnumber = request.form['roomsnumber']), str(roomsbath = request.form['roomsbath']), str(page = request.args.get('page', 1, type=int)))
+#         cache = mc.get(houses_info)
+#         return cache
+#     # print(mc.get("houses_info"))
 
 # -- Form ventas page
 @app.route("/form-venta", methods=["POST", "GET"])
@@ -254,7 +261,7 @@ def buscar_casa():
     if not session.get('logged_in'):
         return redirect("/login")
     elif request.method == 'POST':
-        query = request.form['busqueda']
+        query = request.form['busqueda'] #busca sobre comentarios
 
         houses_info = db_manager.search_houses(query)
         resp = make_response(
@@ -368,9 +375,13 @@ app.config["flask_profiler"] = {
 	]
 }
 
-flask_profiler.init_app(app)
-
+#To implement visual description of profiler instead of results in terminal:
+#1. pip install snakeviz
+#2. snakeviz <profile_file_name> for example: snakeviz GET.root.111ms.1637631934.prof
+from werkzeug.middleware.profiler import ProfilerMiddleware
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[1], profile_dir='.')
 
 if __name__ == "__main__":
     # -- run the app in debug mode
     app.run(debug=True)
+

@@ -36,9 +36,9 @@ class Houses(db.Model):
     segundo_nombre = db.Column(db.String(200))
     primer_apellido = db.Column(db.String(200))
     segundo_apellido = db.Column(db.String(200))
-    DPI = db.Column(db.Integer)
+    DPI = db.Column(db.BigInteger)
     correo_electronico = db.Column(db.String(200))
-    telefono = db.Column(db.Integer)
+    telefono = db.Column(db.BigInteger)
     direccion = db.Column(db.String(200))
     tipo = db.Column(db.String(200))
     zona = db.Column(db.Integer)
@@ -54,8 +54,8 @@ class Houses(db.Model):
 class Photos(db.Model):
     __tablename__ = "photos"
     photos_id = db.Column(db.Integer, primary_key=True)
-    photos = db.Column(db.LargeBinary)
-    house_id = db.Column(db.Integer)
+    photos = db.Column(db.LargeBinary(length=541618))
+    # house_id = db.Column(db.BigInteger)
     house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'))
 
 
@@ -66,9 +66,9 @@ class Citas(db.Model):
     name4 = db.Column(db.String(200))
     lastname3 = db.Column(db.String(200))
     lastname4 = db.Column(db.String(200))
-    dpi1 = db.Column(db.Integer)
+    dpi1 = db.Column(db.BigInteger)
     email2 = db.Column(db.String(200))
-    phone1 = db.Column(db.Integer)
+    phone1 = db.Column(db.BigInteger)
     date = db.Column(db.String(200))
     hour = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -278,25 +278,25 @@ def search_cita(query):
 # producer.send('topic_mysql', value=data)
 # producer.send('topic_es', value=data)
 def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone1, date, hour, comments):
-    # data_dict = {
-    #     'op': 'insert_cita',
-    #     'user_id': user_id,
-    #     'name3': name3,
-    #     'name4': name4,
-    #     'lastname3': lastname3,
-    #     'lastname4': lastname4,
-    #     'dpi1': dpi1,
-    #     'email2': email2,
-    #     'phone1': phone1,
-    #     'date': date,
-    #     'hour': hour,
-    #     'comments': comments
-    # }
-    # producer.send('topic_mysql', value=data_dict)
-    new_cita = Citas(user_id=user_id, name3=name3, name4=name4, lastname3=lastname3, lastname4=lastname4, dpi1=dpi1,
-                     email2=email2, phone1=phone1, date=date, hour=hour)
-    db.session.add(new_cita)
-    db.session.commit()
+    data_dict = {
+        'op': 'insert_cita',
+        'user_id': user_id,
+        'name3': name3,
+        'name4': name4,
+        'lastname3': lastname3,
+        'lastname4': lastname4,
+        'dpi1': dpi1,
+        'email2': email2,
+        'phone1': phone1,
+        'date': date,
+        'hour': hour,
+        'comments': comments
+    }
+    producer.send('topic_mysql', value=data_dict)
+    # new_cita = Citas(user_id=user_id, name3=name3, name4=name4, lastname3=lastname3, lastname4=lastname4, dpi1=dpi1,
+    #                  email2=email2, phone1=phone1, date=date, hour=hour)
+    # db.session.add(new_cita)
+    # db.session.commit()
 
     data = {'comment': comments, 'id': new_cita.cita_id}
     producer.send('topic_es', value=data)
@@ -306,16 +306,16 @@ def insert_cita(user_id, name3, name4, lastname3, lastname4, dpi1, email2, phone
 
 # Insert user to db
 def insert_user(username, email, password):
-    # data_dict = {
-    #     'op': 'insert_user',
-    #     'username': username,
-    #     'email': email,
-    #     'password': password
-    # }
-    # producer.send('topic_mysql', value=data_dict)
-    new_user = Users(username=username, email=email, password=password)
-    db.session.add(new_user)
-    db.session.commit()
+    data_dict = {
+        'op': 'insert_user',
+        'username': username,
+        'email': email,
+        'password': password
+    }
+    producer.send('topic_mysql', value=data_dict)
+    # new_user = Users(username=username, email=email, password=password)
+    # db.session.add(new_user)
+    # db.session.commit()
 
 
 def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone, address, typehome, zone, roomsnumber,
@@ -354,21 +354,30 @@ def insert_house(user_id, name1, name2, lastname1, lastname2, dpi, email1, phone
     data = {'comment': comments, 'id': new_house.house_id}
     producer.send('topic_es', value=data)
     es.index(index='houses_index', id=new_house.house_id,
-             body={'comment': comments, 'id': new_house.house_id})
+             body={'comment': comments,
+                   'id': new_house.house_id,
+                   'typehome': typehome,
+                    'zone': zone,
+                    'roomsnumber': roomsnumber,
+                    'roomsbath': roomsbath,
+                    'pricedol': pricedol,
+                    'pricequet': pricequet
+                   })
 
 
     for image in images:
         new_image = Photos(photos=image.read(), house_id=new_house.house_id)
         db.session.add(new_image)
         db.session.commit()
+        #insert_image
 
 
 # delete
 def remove_house(id):
-    # data_dict = {
-    #     'op': 'remove_house',
-    #     'id': id
-    # }
-    # producer.send('topic_mysql', value=data_dict)
+    data_dict = {
+        'op': 'remove_house',
+        'id': id
+    }
+    producer.send('topic_mysql', value=data_dict)
     es.delete(index="houses_index", id=id)
-    data = Houses.query.filter_by(house_id=id).delete()
+    # data = Houses.query.filter_by(house_id=id).delete()

@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'super secret key'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:admin@localhost:3306/Houses'
 db = SQLAlchemy(app)  # flask-sqlalchemy
 
 

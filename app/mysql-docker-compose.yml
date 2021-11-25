@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=Houses
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
